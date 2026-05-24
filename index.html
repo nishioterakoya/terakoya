@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>てらこやこべつ</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&family=Zen+Maru+Gothic:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a1628;--surface:#111f35;--card:#172540;--card2:#1d2e4a;
+  --blue:#4fc3f7;--yellow:#ffd54f;--green:#69db7c;--pink:#f783ac;
+  --text:#e8f4fd;--muted:#5a7fa0;--r:16px;--rs:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);max-width:100%;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:absolute;inset:0;background:
+  radial-gradient(1px 1px at 15% 25%,rgba(255,255,255,.6) 0%,transparent 100%),
+  radial-gradient(1px 1px at 80% 10%,rgba(255,255,255,.4) 0%,transparent 100%),
+  radial-gradient(1.5px 1.5px at 50% 60%,rgba(255,255,255,.5) 0%,transparent 100%),
+  radial-gradient(1px 1px at 90% 70%,rgba(255,255,255,.3) 0%,transparent 100%),
+  radial-gradient(1px 1px at 20% 80%,rgba(255,255,255,.4) 0%,transparent 100%);
+  pointer-events:none;z-index:0}
+
+/* ── ONBOARDING ── */
+#ob{position:relative;z-index:500;background:var(--bg);display:flex;flex-direction:column;align-items:center;overflow-y:auto;min-height:100vh}
+#ob.hide{display:none}
+.ob-inner{width:100%;max-width:430px;display:flex;flex-direction:column}
+.ob-hero{background:linear-gradient(160deg,#0d2040,#0a1628);padding:48px 28px 32px;text-align:center;position:relative;overflow:hidden}
+.ob-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(79,195,247,.12) 0%,transparent 70%)}
+.ob-planet{font-size:68px;display:block;animation:float 4s ease-in-out infinite;position:relative}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.ob-logo{font-family:'Zen Maru Gothic',sans-serif;font-size:24px;font-weight:900;color:var(--blue);margin-top:12px;position:relative}
+.ob-logo em{color:var(--yellow);font-style:normal}
+.ob-tag{font-size:13px;color:var(--muted);margin-top:4px;position:relative;font-weight:700}
+.ob-body{flex:1;padding:20px 24px}
+.ob-title{font-family:'Zen Maru Gothic',sans-serif;font-size:20px;font-weight:900;margin-bottom:6px}
+.ob-sub{font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.6;font-weight:600}
+.ob-label{display:block;font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
+.ob-inp{width:100%;padding:13px 14px;background:var(--card);border:2px solid rgba(79,195,247,.12);border-radius:12px;color:var(--text);font-family:'Nunito',sans-serif;font-size:15px;font-weight:700;outline:none;transition:border-color .2s;margin-bottom:14px}
+.ob-inp:focus{border-color:var(--blue)}
+.ob-inp::placeholder{color:var(--muted);font-weight:600}
+select.ob-inp{cursor:pointer}
+.av-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.av{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;border:3px solid transparent;background:var(--card);transition:all .2s}
+.av.sel{border-color:var(--blue);background:rgba(79,195,247,.1)}
+.ob-btn{width:100%;padding:14px;background:var(--blue);color:#071523;border:none;border-radius:12px;font-family:'Nunito',sans-serif;font-size:15px;font-weight:900;cursor:pointer;transition:all .15s;margin-top:8px}
+.ob-btn:active{transform:scale(.97)}
+.ob-btn:disabled{opacity:.4;cursor:not-allowed}
+
+/* complete */
+.ob-done{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px;text-align:center}
+.ob-done-icon{font-size:72px;animation:pop .5s cubic-bezier(.175,.885,.32,1.275)}
+@keyframes pop{from{transform:scale(0)}to{transform:scale(1)}}
+.prof-card{width:100%;background:var(--card);border-radius:16px;padding:18px;border:1px solid rgba(79,195,247,.1);margin:18px 0 24px;text-align:left}
+.prof-row{display:flex;align-items:center;gap:12px}
+.prof-av{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;border:3px solid var(--blue)}
+.prof-name{font-size:19px;font-weight:900}
+.prof-grade{font-size:12px;color:var(--muted);font-weight:700;margin-top:2px}
+
+/* ── MAIN APP ── */
+#app{display:none;flex-direction:column;min-height:100vh;padding-bottom:76px;position:relative;z-index:1}
+#app.show{display:flex}
+
+.hdr{padding:13px 18px 10px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;background:rgba(10,22,40,.88);backdrop-filter:blur(12px);border-bottom:1px solid rgba(79,195,247,.08)}
+.hdr-logo{font-family:'Zen Maru Gothic',sans-serif;font-size:19px;font-weight:900;color:var(--blue)}
+.hdr-logo em{color:var(--yellow);font-style:normal}
+.hdr-av{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;border:2px solid var(--blue);background:rgba(79,195,247,.1)}
+
+.nav{position:sticky;bottom:0;width:100%;background:var(--surface);border-top:1px solid rgba(79,195,247,.12);display:flex;z-index:100}
+.ni{flex:1;padding:10px 0 7px;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;color:var(--muted);font-size:10px;font-weight:800;transition:color .2s}
+.ni.active{color:var(--blue)}
+.ni-icon{font-size:22px}
+
+.screen{display:none;flex-direction:column}
+.screen.active{display:flex}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.screen.active>*{animation:fadeUp .28s ease both}
+.screen.active>*:nth-child(2){animation-delay:.05s}
+.screen.active>*:nth-child(3){animation-delay:.1s}
+.screen.active>*:nth-child(4){animation-delay:.15s}
+.screen.active>*:nth-child(5){animation-delay:.2s}
+
+.sec{padding:16px 18px 8px;font-size:11px;font-weight:800;letter-spacing:1.2px;color:var(--muted);text-transform:uppercase}
+.card{background:var(--card);border-radius:var(--r);border:1px solid rgba(79,195,247,.08)}
+.btn{border:none;border-radius:var(--rs);font-family:inherit;font-weight:800;cursor:pointer;transition:all .15s}
+.btn:active{transform:scale(.96)}
+.btn-blue{background:var(--blue);color:#071523}
+.btn-ghost{background:var(--card2);color:var(--text);border:1px solid rgba(79,195,247,.15)}
+.btn-red{background:rgba(240,98,146,.15);color:var(--pink);border:1px solid rgba(240,98,146,.25)}
+
+/* ── HOME ── */
+.hero{margin:14px 18px 0;background:linear-gradient(135deg,#122040,#0d1e38);border-radius:var(--r);padding:18px;border:1px solid rgba(79,195,247,.15);position:relative;overflow:hidden}
+.hero::after{content:'📖';position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:48px;opacity:.18}
+.hero-g{font-size:12px;color:var(--muted);margin-bottom:3px}
+.hero-g strong{color:var(--blue)}
+.hero-t{font-family:'Zen Maru Gothic',sans-serif;font-size:18px;font-weight:900;line-height:1.3}
+.streak{margin-top:10px;display:inline-flex;align-items:center;gap:6px;background:rgba(255,213,79,.1);border:1px solid rgba(255,213,79,.2);border-radius:20px;padding:5px 12px;font-size:12px;font-weight:800;color:var(--yellow)}
+
+/* subject picker */
+.spick{margin:10px 18px 0;display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.sc{padding:9px 4px;border-radius:var(--rs);background:var(--card);border:2px solid transparent;text-align:center;cursor:pointer;transition:all .15s;font-size:11px;font-weight:800;color:var(--muted)}
+.sc .e{font-size:20px;display:block;margin-bottom:3px}
+.sc.sel{border-color:var(--blue);background:rgba(79,195,247,.1);color:var(--blue)}
+
+/* timer */
+.tcrd{margin:10px 18px 0;background:linear-gradient(135deg,#122040,#0e1c36);border-radius:var(--r);padding:18px;border:1px solid rgba(79,195,247,.18);text-align:center}
+.tl{font-size:11px;color:var(--muted);margin-bottom:6px;font-weight:700}
+.td{font-size:54px;font-weight:900;letter-spacing:-2px;color:var(--blue);font-variant-numeric:tabular-nums}
+.td.run{animation:glow 2s ease infinite}
+@keyframes glow{0%,100%{text-shadow:0 0 16px rgba(79,195,247,.4)}50%{text-shadow:0 0 40px rgba(79,195,247,.9)}}
+.ts{margin:6px 0 14px;font-size:12px;color:var(--muted)}
+.ts span{background:rgba(79,195,247,.1);border-radius:20px;padding:3px 10px;color:var(--blue);font-weight:800}
+.tc{display:flex;gap:8px}
+.tc .btn{flex:1;padding:12px;font-size:14px}
+
+/* goal bar */
+.gbar-wrap{margin:10px 18px 0;background:var(--card);border-radius:var(--r);padding:14px;border:1px solid rgba(79,195,247,.07)}
+.gbar-top{display:flex;justify-content:space-between;font-size:12px;font-weight:800;margin-bottom:8px}
+.gbar{height:8px;background:var(--surface);border-radius:4px;overflow:hidden}
+.gbar-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--blue),var(--green));transition:width .6s ease}
+.gbar-note{font-size:11px;color:var(--muted);margin-top:6px;font-weight:700}
+
+/* stats */
+.stats{margin:10px 18px 0;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{background:var(--card);border-radius:var(--rs);padding:12px 8px;text-align:center;border:1px solid rgba(79,195,247,.07)}
+.stat-v{font-size:22px;font-weight:900}
+.stat-l{font-size:10px;color:var(--muted);margin-top:2px;font-weight:700}
+
+/* log */
+.log-item{display:flex;align-items:center;gap:10px;padding:11px 18px;border-bottom:1px solid rgba(79,195,247,.05)}
+.ld{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.li{flex:1}
+.li-s{font-size:13px;font-weight:800}
+.li-t{font-size:11px;color:var(--muted)}
+.li-d{font-size:12px;font-weight:900;color:var(--yellow)}
+
+/* ── QUESTION ── */
+
+
+.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-80px);background:var(--card);border:1px solid rgba(79,195,247,.2);border-radius:12px;padding:10px 18px;font-size:13px;font-weight:800;z-index:900;transition:transform .3s;white-space:nowrap}
+.toast.show{transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+
+<!-- ══ ONBOARDING ══ -->
+<div id="ob">
+  <div class="ob-inner">
+
+    <!-- step1: 名前・アイコン -->
+    <div id="ob-s1" style="display:flex;flex-direction:column;flex:1">
+      <div class="ob-hero">
+        <span class="ob-planet">🏮</span>
+        <div class="ob-logo">てらこや<em>こべつ</em></div>
+        <div class="ob-tag">まずはプロフィールを作ってね📝</div>
+      </div>
+      <div class="ob-body" style="flex:1">
+        <div class="ob-title">ようこそ！👋</div>
+        <div class="ob-sub">名前とアイコンを選んでね</div>
+        <label class="ob-label">なまえ</label>
+        <input class="ob-inp" id="ob-name" type="text" placeholder="例：たろう" maxlength="10" oninput="chkName()">
+        <label class="ob-label">アイコン</label>
+        <div class="av-row" id="avRow">
+          <div class="av sel" data-av="🐯" onclick="pickAv(this)">🐯</div>
+          <div class="av" data-av="🐼" onclick="pickAv(this)">🐼</div>
+          <div class="av" data-av="🦊" onclick="pickAv(this)">🦊</div>
+          <div class="av" data-av="🐸" onclick="pickAv(this)">🐸</div>
+          <div class="av" data-av="🦁" onclick="pickAv(this)">🦁</div>
+          <div class="av" data-av="🐧" onclick="pickAv(this)">🐧</div>
+          <div class="av" data-av="🦄" onclick="pickAv(this)">🦄</div>
+          <div class="av" data-av="🐉" onclick="pickAv(this)">🐉</div>
+        </div>
+        <label class="ob-label">学年</label>
+        <select class="ob-inp" id="ob-grade" onchange="chkName()">
+          <option value="">選択してね</option>
+          <option>小4</option><option>小5</option><option>小6</option>
+          <option>中1</option><option>中2</option><option>中3</option>
+          <option>高1</option><option>高2</option><option>高3</option>
+        </select>
+        <label class="ob-label">1日の目標時間</label>
+        <select class="ob-inp" id="ob-goal">
+          <option value="30">30分（コツコツ派）</option>
+          <option value="60">60分（しっかり派）</option>
+          <option value="90">90分（頑張り派）</option>
+          <option value="120">120分（本気派）</option>
+        </select>
+        <label class="ob-label">🔑 合言葉</label>
+        <input class="ob-inp" id="ob-pass" type="text" placeholder="先生から教えてもらった合言葉を入れてね" oninput="chkName()" autocomplete="off" style="margin-bottom:4px">
+        <div id="pass-hint" style="font-size:11px;color:var(--pink);font-weight:800;margin-bottom:12px;display:none">❌ 合言葉が違うよ。先生に確認してね。</div>
+        <button class="ob-btn" id="ob-next" onclick="obComplete()" disabled>はじめる 🎉</button>
+      </div>
+    </div>
+
+    <!-- complete -->
+    <div id="ob-done" style="display:none;flex:1">
+      <div class="ob-done">
+        <div class="ob-done-icon">🎉</div>
+        <div style="font-family:'Zen Maru Gothic',sans-serif;font-size:22px;font-weight:900;margin:14px 0 6px">登録完了！</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.7">いっしょにがんばろう✨</div>
+        <div class="prof-card" id="prof-card"></div>
+        <button class="ob-btn" onclick="launch()">📚 てらこやこべつをはじめる！</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ MAIN APP ══ -->
+<div id="app">
+
+  <!-- ── HOME ── -->
+  <div class="screen active" id="sc-home">
+    <div class="hdr">
+      <div class="hdr-logo">てらこや<em>こべつ</em> 🏮</div>
+      <div class="hdr-av" id="hdrAv">🐯</div>
+    </div>
+
+    <div class="hero">
+      <div class="hero-g">こんにちは、<strong id="heroName">さん</strong>！</div>
+      <div class="hero-t">今日もいっしょに<br>がんばろう✨</div>
+      <div class="streak">🔥 <span id="streakVal">1</span>日連続勉強中！</div>
+    </div>
+
+    <div class="sec">⏱ 学習タイマー</div>
+    <div class="spick" id="spick">
+      <div class="sc sel" data-s="算数" onclick="pickS(this)"><span class="e">🔢</span>算数</div>
+      <div class="sc" data-s="国語" onclick="pickS(this)"><span class="e">📖</span>国語</div>
+      <div class="sc" data-s="理科" onclick="pickS(this)"><span class="e">🔬</span>理科</div>
+      <div class="sc" data-s="社会" onclick="pickS(this)"><span class="e">🌏</span>社会</div>
+      <div class="sc" data-s="英語" onclick="pickS(this)"><span class="e">🔤</span>英語</div>
+      <div class="sc" data-s="その他" onclick="pickS(this)"><span class="e">📝</span>その他</div>
+    </div>
+
+    <div class="tcrd">
+      <div class="tl">学習時間</div>
+      <div class="td" id="timerD">00:00</div>
+      <div class="ts">科目：<span id="timerSubj">算数</span></div>
+      <div class="tc">
+        <button class="btn btn-blue" id="timerBtn" onclick="toggleTimer()" style="font-size:14px;padding:12px">▶ スタート</button>
+        <button class="btn btn-red" onclick="stopAndSave()" style="font-size:14px;padding:12px">■ 終了・保存</button>
+      </div>
+    </div>
+
+    <div class="gbar-wrap">
+      <div class="gbar-top">
+        <span>🎯 今日の目標</span>
+        <span id="gbarLabel" style="color:var(--blue)">0 / 60分</span>
+      </div>
+      <div class="gbar"><div class="gbar-fill" id="gbarFill" style="width:0%"></div></div>
+      <div class="gbar-note" id="gbarNote">あと60分がんばろう！</div>
+    </div>
+
+    <div class="sec">📊 今日の記録</div>
+    <div class="stats">
+      <div class="stat"><div class="stat-v" id="statTotal" style="color:var(--blue)">0<span style="font-size:12px">分</span></div><div class="stat-l">合計時間</div></div>
+      <div class="stat"><div class="stat-v" id="statSubjects" style="color:var(--yellow)">0</div><div class="stat-l">科目数</div></div>
+      <div class="stat"><div class="stat-v" id="statSessions" style="color:var(--green)">0</div><div class="stat-l">セッション</div></div>
+    </div>
+
+    <div class="sec">📋 今日の学習ログ</div>
+    <div id="logList">
+      <div style="padding:16px 18px;font-size:13px;color:var(--muted);font-weight:700">まだ記録がないよ。タイマーをスタートしよう！</div>
+    </div>
+  </div>
+
+</div><!-- /#app -->
+
+<!-- ── NAV ── -->
+<div class="nav" id="nav" style="display:none">
+  <div class="ni active" onclick="goSc('home',this)"><div class="ni-icon">🏠</div>ホーム</div>
+</div>
+
+
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── OB STATE ──
+const ob = { name:'', avatar:'🐯', grade:'', goalMin:60 };
+
+function chkName(){
+  const n = document.getElementById('ob-name').value.trim();
+  const g = document.getElementById('ob-grade').value;
+  const p = document.getElementById('ob-pass').value.trim();
+  const hint = document.getElementById('pass-hint');
+  ob.name = n; ob.grade = g;
+  const passOk = p === 'のむら';
+  // 合言葉が入力済みで間違いの場合だけヒント表示
+  hint.style.display = (p.length > 0 && !passOk) ? 'block' : 'none';
+  document.getElementById('ob-next').disabled = !(n && g && passOk);
+}
+function pickAv(el){
+  document.querySelectorAll('.av').forEach(a=>a.classList.remove('sel'));
+  el.classList.add('sel');
+  ob.avatar = el.dataset.av;
+}
+function obComplete(){
+  ob.name = document.getElementById('ob-name').value.trim();
+  ob.grade = document.getElementById('ob-grade').value;
+  ob.goalMin = parseInt(document.getElementById('ob-goal').value);
+  document.getElementById('ob-s1').style.display='none';
+  document.getElementById('ob-done').style.display='flex';
+  document.getElementById('prof-card').innerHTML=`
+    <div class="prof-row" style="margin-bottom:10px">
+      <div class="prof-av">${ob.avatar}</div>
+      <div><div class="prof-name">${ob.name}</div><div class="prof-grade">${ob.grade} ・ 目標${ob.goalMin}分/日</div></div>
+    </div>`;
+}
+function launch(){
+  applyProfile();
+  document.getElementById('ob').classList.add('hide');
+  document.getElementById('app').style.display='flex';
+  document.getElementById('nav').style.display='flex';
+  goalMin = ob.goalMin;
+  updateGoalBar();
+  sessionStorage.setItem('ob','1');
+  sessionStorage.setItem('ob_d', JSON.stringify(ob));
+}
+function applyProfile(){
+  document.getElementById('hdrAv').textContent = ob.avatar;
+  document.getElementById('hdrAv2').textContent = ob.avatar;
+  document.getElementById('heroName').textContent = ob.name + 'さん';
+}
+
+// ── NAV ──
+function goSc(name,el){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('sc-'+name).classList.add('active');
+  document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));
+  if(el) el.classList.add('active');
+}
+
+// ── スプレッドシート送信URL ──
+// ↓ここに手順書の通りにApps ScriptのURLを貼り付けてください
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbz56XfZd1igcnP1idjs3POCjQ6VB0vsJ3QInWW30xgnWGKZLAB2zCUBnSG9-TpAE6z1/exec';
+
+// ── TIMER ──
+let timerSec=0, timerRunning=false, timerInterval=null, currentSubj='算数';
+let goalMin=60, totalMinToday=0;
+const logData=[];
+const subjectColors={算数:'var(--blue)',国語:'var(--yellow)',理科:'var(--green)',社会:'var(--orange,#ffa94d)',英語:'var(--purple,#b197fc)',その他:'var(--muted)'};
+
+function pickS(el){
+  document.querySelectorAll('.sc').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel'); currentSubj=el.dataset.s;
+  document.getElementById('timerSubj').textContent=currentSubj;
+}
+function toggleTimer(){
+  if(timerRunning){
+    clearInterval(timerInterval); timerRunning=false;
+    document.getElementById('timerBtn').textContent='▶ スタート';
+    document.getElementById('timerD').classList.remove('run');
+  } else {
+    timerRunning=true;
+    document.getElementById('timerBtn').textContent='⏸ 一時停止';
+    document.getElementById('timerD').classList.add('run');
+    timerInterval=setInterval(()=>{ timerSec++; updateTD(); },1000);
+  }
+}
+function stopAndSave(){
+  if(timerSec < 10){ showToast('⚠ 10秒以上計測してから保存してね'); return; }
+  clearInterval(timerInterval); timerRunning=false;
+  document.getElementById('timerBtn').textContent='▶ スタート';
+  document.getElementById('timerD').classList.remove('run');
+  const mins = Math.round(timerSec/60) || 1;
+  const now = new Date();
+  const hm = s=>String(s).padStart(2,'0');
+  const startMin = new Date(now - timerSec*1000);
+  const timeStr = `${hm(startMin.getHours())}:${hm(startMin.getMinutes())} 〜 ${hm(now.getHours())}:${hm(now.getMinutes())}`;
+  const dateStr = `${now.getFullYear()}/${hm(now.getMonth()+1)}/${hm(now.getDate())}`;
+  logData.push({ subj: currentSubj, mins, timeStr });
+  totalMinToday += mins;
+  timerSec=0; updateTD();
+  updateStats(); renderLog(); updateGoalBar();
+  // スプレッドシートに送信
+  sendToSheet({
+    name: ob.name,
+    grade: ob.grade,
+    date: dateStr,
+    subject: currentSubj,
+    minutes: mins,
+    timeRange: timeStr,
+    goalMin: ob.goalMin,
+  });
+  showToast(`✅ ${currentSubj} ${mins}分 を記録したよ！`);
+}
+
+// スプレッドシートへ送信
+function sendToSheet(data){
+  if(!GAS_URL || GAS_URL.includes('★')){ return; } // URL未設定なら何もしない
+  const params = new URLSearchParams(data);
+  fetch(GAS_URL + '?' + params.toString(), { method:'GET', mode:'no-cors' })
+    .catch(()=>{}); // エラーは無視（no-corsのため）
+}
+function updateTD(){
+  const m=String(Math.floor(timerSec/60)).padStart(2,'0');
+  const s=String(timerSec%60).padStart(2,'0');
+  document.getElementById('timerD').textContent=m+':'+s;
+}
+function updateStats(){
+  document.getElementById('statTotal').innerHTML=totalMinToday+'<span style="font-size:12px">分</span>';
+  const subjSet=new Set(logData.map(l=>l.subj));
+  document.getElementById('statSubjects').textContent=subjSet.size;
+  document.getElementById('statSessions').textContent=logData.length;
+}
+function renderLog(){
+  const el=document.getElementById('logList');
+  if(!logData.length){
+    el.innerHTML='<div style="padding:16px 18px;font-size:13px;color:var(--muted);font-weight:700">まだ記録がないよ。タイマーをスタートしよう！</div>';
+    return;
+  }
+  el.innerHTML=[...logData].reverse().map(l=>`
+    <div class="log-item">
+      <div class="ld" style="background:${subjectColors[l.subj]||'var(--muted)'}"></div>
+      <div class="li"><div class="li-s">${l.subj}</div><div class="li-t">${l.timeStr}</div></div>
+      <div class="li-d">${l.mins}分</div>
+    </div>`).join('');
+}
+function updateGoalBar(){
+  const pct = Math.min(100, Math.round(totalMinToday/goalMin*100));
+  document.getElementById('gbarFill').style.width=pct+'%';
+  document.getElementById('gbarLabel').textContent=totalMinToday+' / '+goalMin+'分';
+  const rem = goalMin - totalMinToday;
+  document.getElementById('gbarNote').textContent =
+    rem<=0 ? '🎉 目標達成！すごい！' : `あと${rem}分がんばろう！`;
+}
+
+
+
+// ── OB FUNCTIONS ──
+function obComplete(){
+  ob.name = document.getElementById('ob-name').value.trim();
+  ob.grade = document.getElementById('ob-grade').value;
+  ob.goalMin = parseInt(document.getElementById('ob-goal').value);
+  document.getElementById('ob-s1').style.display='none';
+  document.getElementById('ob-done').style.display='flex';
+  document.getElementById('prof-card').innerHTML=`
+    <div class="prof-row" style="margin-bottom:10px">
+      <div class="prof-av">${ob.avatar}</div>
+      <div><div class="prof-name">${ob.name}</div><div class="prof-grade">${ob.grade} ・ 目標${ob.goalMin}分/日</div></div>
+    </div>`;
+}
+function launch(){
+  applyProfile();
+  document.getElementById('ob').classList.add('hide');
+  document.getElementById('app').style.display='flex';
+  document.getElementById('nav').style.display='flex';
+  goalMin = ob.goalMin;
+  updateGoalBar();
+  sessionStorage.setItem('ob','1');
+  sessionStorage.setItem('ob_d', JSON.stringify(ob));
+}
+function applyProfile(){
+  document.getElementById('hdrAv').textContent = ob.avatar;
+  document.getElementById('heroName').textContent = ob.name + 'さん';
+}
+
+// ── TOAST ──
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2400);
+}
+
+// ── INIT ──
+(function(){
+  const done=sessionStorage.getItem('ob');
+  if(done){
+    const d=JSON.parse(sessionStorage.getItem('ob_d')||'{}');
+    Object.assign(ob,d); goalMin=ob.goalMin||60;
+    applyProfile(); updateGoalBar();
+    document.getElementById('ob').classList.add('hide');
+    document.getElementById('app').style.display='flex';
+    document.getElementById('nav').style.display='flex';
+  }
+})();
+</script>
+</body>
+</html>
