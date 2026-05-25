@@ -146,11 +146,11 @@ select.ob-inp{cursor:pointer}
       <div class="ob-hero">
         <span class="ob-planet">🏮</span>
         <div class="ob-logo">てらこや<em>こべつ</em></div>
-        <div class="ob-tag">まずはプロフィールを作ってね📝</div>
+        <div class="ob-tag">まずはプロフィールを作ろう</div>
       </div>
       <div class="ob-body" style="flex:1">
         <div class="ob-title">ようこそ！👋</div>
-        <div class="ob-sub">名前とアイコンを選んでね</div>
+        <div class="ob-sub">名前とアイコンを選ぼう</div>
         <label class="ob-label">なまえ</label>
         <input class="ob-inp" id="ob-name" type="text" placeholder="例：たろう" maxlength="10" oninput="chkName()">
         <label class="ob-label">アイコン</label>
@@ -166,21 +166,23 @@ select.ob-inp{cursor:pointer}
         </div>
         <label class="ob-label">学年</label>
         <select class="ob-inp" id="ob-grade" onchange="chkName()">
-          <option value="">選択してね</option>
+          <option value="">学年選択</option>
           <option>小4</option><option>小5</option><option>小6</option>
           <option>中1</option><option>中2</option><option>中3</option>
           <option>高1</option><option>高2</option><option>高3</option>
         </select>
         <label class="ob-label">1日の目標時間</label>
         <select class="ob-inp" id="ob-goal">
-          <option value="30">30分（コツコツ派）</option>
-          <option value="60">60分（しっかり派）</option>
-          <option value="90">90分（頑張り派）</option>
-          <option value="120">120分（本気派）</option>
+          <option value="30">30分</option>
+          <option value="60">60分</option>
+          <option value="90">90分</option>
+          <option value="120">120分</option>
+          <option value="150">150分</option>
+          <option value="180">180分</option>
         </select>
         <label class="ob-label">🔑 合言葉</label>
-        <input class="ob-inp" id="ob-pass" type="text" placeholder="先生から教えてもらった合言葉を入れてね" oninput="chkName()" autocomplete="off" style="margin-bottom:4px">
-        <div id="pass-hint" style="font-size:11px;color:var(--pink);font-weight:800;margin-bottom:12px;display:none">❌ 合言葉が違うよ。先生に確認してね。</div>
+        <input class="ob-inp" id="ob-pass" type="text" placeholder="合言葉を入れよう" oninput="chkName()" autocomplete="off" style="margin-bottom:4px">
+        <div id="pass-hint" style="font-size:11px;color:var(--pink);font-weight:800;margin-bottom:12px;display:none">❌ 合言葉が違います。</div>
         <button class="ob-btn" id="ob-next" onclick="obComplete()" disabled>はじめる 🎉</button>
       </div>
     </div>
@@ -190,7 +192,7 @@ select.ob-inp{cursor:pointer}
       <div class="ob-done">
         <div class="ob-done-icon">🎉</div>
         <div style="font-family:'Zen Maru Gothic',sans-serif;font-size:22px;font-weight:900;margin:14px 0 6px">登録完了！</div>
-        <div style="font-size:13px;color:var(--muted);line-height:1.7">いっしょにがんばろう✨</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.7">いっしょにがんばろう</div>
         <div class="prof-card" id="prof-card"></div>
         <button class="ob-btn" onclick="launch()">📚 てらこやこべつをはじめる！</button>
       </div>
@@ -237,21 +239,21 @@ select.ob-inp{cursor:pointer}
 
     <div class="gbar-wrap">
       <div class="gbar-top">
-        <span>🎯 今日の目標</span>
+        <span>今日の目標</span>
         <span id="gbarLabel" style="color:var(--blue)">0 / 60分</span>
       </div>
       <div class="gbar"><div class="gbar-fill" id="gbarFill" style="width:0%"></div></div>
       <div class="gbar-note" id="gbarNote">あと60分がんばろう！</div>
     </div>
 
-    <div class="sec">📊 今日の記録</div>
+    <div class="sec">今日の記録</div>
     <div class="stats">
       <div class="stat"><div class="stat-v" id="statTotal" style="color:var(--blue)">0<span style="font-size:12px">分</span></div><div class="stat-l">合計時間</div></div>
       <div class="stat"><div class="stat-v" id="statSubjects" style="color:var(--yellow)">0</div><div class="stat-l">科目数</div></div>
       <div class="stat"><div class="stat-v" id="statSessions" style="color:var(--green)">0</div><div class="stat-l">セッション</div></div>
     </div>
 
-    <div class="sec">📋 今日の学習ログ</div>
+    <div class="sec">今日の学習ログ</div>
     <div id="logList">
       <div style="padding:16px 18px;font-size:13px;color:var(--muted);font-weight:700">まだ記録がないよ。タイマーをスタートしよう！</div>
     </div>
