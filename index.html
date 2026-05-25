@@ -76,6 +76,33 @@ select.ob-inp{cursor:pointer}
 
 .sec{padding:16px 18px 8px;font-size:11px;font-weight:800;letter-spacing:1.2px;color:var(--muted);text-transform:uppercase}
 .card{background:var(--card);border-radius:var(--r);border:1px solid #e2e8f0}
+
+/* ── STATS PAGE ── */
+.stats-page{padding:0 18px 16px}
+.kpi-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px}
+.kpi-card{background:var(--card);border-radius:var(--r);border:1px solid #e2e8f0;padding:16px;text-align:center}
+.kpi-val{font-size:28px;font-weight:900;line-height:1}
+.kpi-lbl{font-size:11px;color:var(--muted);font-weight:700;margin-top:4px}
+.chart-card{background:var(--card);border-radius:var(--r);border:1px solid #e2e8f0;padding:16px;margin-bottom:12px}
+.chart-title{font-size:13px;font-weight:800;margin-bottom:14px;color:var(--text)}
+.bar-chart{display:flex;align-items:flex-end;gap:6px;height:100px}
+.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
+.bar-box{width:100%;border-radius:6px 6px 0 0;min-height:4px;transition:height .5s ease}
+.bar-val{font-size:9px;font-weight:800;color:var(--muted);white-space:nowrap}
+.bar-lbl{font-size:10px;font-weight:700;color:var(--muted)}
+.subj-bars{display:flex;flex-direction:column;gap:10px}
+.subj-bar-row{display:flex;align-items:center;gap:10px}
+.subj-bar-name{font-size:12px;font-weight:700;width:52px;flex-shrink:0}
+.subj-bar-track{flex:1;height:10px;background:#f1f5f9;border-radius:5px;overflow:hidden}
+.subj-bar-fill{height:100%;border-radius:5px;transition:width .6s ease}
+.subj-bar-min{font-size:11px;font-weight:800;color:var(--muted);width:40px;text-align:right;flex-shrink:0}
+.hist-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #f1f5f9}
+.hist-item:last-child{border-bottom:none}
+.hist-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.hist-info{flex:1}
+.hist-subj{font-size:13px;font-weight:800}
+.hist-date{font-size:11px;color:var(--muted)}
+.hist-min{font-size:13px;font-weight:900;color:var(--yellow)}
 .btn{border:none;border-radius:var(--rs);font-family:inherit;font-weight:800;cursor:pointer;transition:all .15s}
 .btn:active{transform:scale(.96)}
 .btn-blue{background:#2196f3;color:#ffffff}
@@ -146,11 +173,11 @@ select.ob-inp{cursor:pointer}
       <div class="ob-hero">
         <span class="ob-planet">🏮</span>
         <div class="ob-logo">てらこや<em>こべつ</em></div>
-        <div class="ob-tag">まずはプロフィールを作ろう</div>
+        <div class="ob-tag">まずはプロフィールを作ってね📝</div>
       </div>
       <div class="ob-body" style="flex:1">
         <div class="ob-title">ようこそ！👋</div>
-        <div class="ob-sub">名前とアイコンを選ぼう</div>
+        <div class="ob-sub">名前とアイコンを選んでね</div>
         <label class="ob-label">なまえ</label>
         <input class="ob-inp" id="ob-name" type="text" placeholder="例：たろう" maxlength="10" oninput="chkName()">
         <label class="ob-label">アイコン</label>
@@ -166,23 +193,21 @@ select.ob-inp{cursor:pointer}
         </div>
         <label class="ob-label">学年</label>
         <select class="ob-inp" id="ob-grade" onchange="chkName()">
-          <option value="">学年選択</option>
+          <option value="">選択してね</option>
           <option>小4</option><option>小5</option><option>小6</option>
           <option>中1</option><option>中2</option><option>中3</option>
           <option>高1</option><option>高2</option><option>高3</option>
         </select>
         <label class="ob-label">1日の目標時間</label>
         <select class="ob-inp" id="ob-goal">
-          <option value="30">30分</option>
-          <option value="60">60分</option>
-          <option value="90">90分</option>
-          <option value="120">120分</option>
-          <option value="150">150分</option>
-          <option value="180">180分</option>
+          <option value="30">30分（コツコツ派）</option>
+          <option value="60">60分（しっかり派）</option>
+          <option value="90">90分（頑張り派）</option>
+          <option value="120">120分（本気派）</option>
         </select>
         <label class="ob-label">🔑 合言葉</label>
-        <input class="ob-inp" id="ob-pass" type="text" placeholder="合言葉を入れよう" oninput="chkName()" autocomplete="off" style="margin-bottom:4px">
-        <div id="pass-hint" style="font-size:11px;color:var(--pink);font-weight:800;margin-bottom:12px;display:none">❌ 合言葉が違います。</div>
+        <input class="ob-inp" id="ob-pass" type="text" placeholder="先生から教えてもらった合言葉を入れてね" oninput="chkName()" autocomplete="off" style="margin-bottom:4px">
+        <div id="pass-hint" style="font-size:11px;color:var(--pink);font-weight:800;margin-bottom:12px;display:none">❌ 合言葉が違うよ。先生に確認してね。</div>
         <button class="ob-btn" id="ob-next" onclick="obComplete()" disabled>はじめる 🎉</button>
       </div>
     </div>
@@ -192,7 +217,7 @@ select.ob-inp{cursor:pointer}
       <div class="ob-done">
         <div class="ob-done-icon">🎉</div>
         <div style="font-family:'Zen Maru Gothic',sans-serif;font-size:22px;font-weight:900;margin:14px 0 6px">登録完了！</div>
-        <div style="font-size:13px;color:var(--muted);line-height:1.7">いっしょにがんばろう</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.7">いっしょにがんばろう✨</div>
         <div class="prof-card" id="prof-card"></div>
         <button class="ob-btn" onclick="launch()">📚 てらこやこべつをはじめる！</button>
       </div>
@@ -239,23 +264,68 @@ select.ob-inp{cursor:pointer}
 
     <div class="gbar-wrap">
       <div class="gbar-top">
-        <span>今日の目標</span>
+        <span>🎯 今日の目標</span>
         <span id="gbarLabel" style="color:var(--blue)">0 / 60分</span>
       </div>
       <div class="gbar"><div class="gbar-fill" id="gbarFill" style="width:0%"></div></div>
       <div class="gbar-note" id="gbarNote">あと60分がんばろう！</div>
     </div>
 
-    <div class="sec">今日の記録</div>
+    <div class="sec">📊 今日の記録</div>
     <div class="stats">
       <div class="stat"><div class="stat-v" id="statTotal" style="color:var(--blue)">0<span style="font-size:12px">分</span></div><div class="stat-l">合計時間</div></div>
       <div class="stat"><div class="stat-v" id="statSubjects" style="color:var(--yellow)">0</div><div class="stat-l">科目数</div></div>
       <div class="stat"><div class="stat-v" id="statSessions" style="color:var(--green)">0</div><div class="stat-l">セッション</div></div>
     </div>
 
-    <div class="sec">今日の学習ログ</div>
+    <div class="sec">📋 今日の学習ログ</div>
     <div id="logList">
       <div style="padding:16px 18px;font-size:13px;color:var(--muted);font-weight:700">まだ記録がないよ。タイマーをスタートしよう！</div>
+    </div>
+  </div>
+
+  <!-- ── STATS ── -->
+  <div class="screen" id="sc-stats">
+    <div class="hdr">
+      <div class="hdr-logo">てらこや<em>こべつ</em> 🏮</div>
+      <div class="hdr-av" id="hdrAv2">🐯</div>
+    </div>
+    <div class="sec">📈 学習統計</div>
+    <div class="stats-page">
+      <!-- KPI -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-val" id="statTotalAll" style="color:var(--blue)">0<span style="font-size:14px">分</span></div>
+          <div class="kpi-lbl">総勉強時間</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-val" id="statDays" style="color:var(--green)">0</div>
+          <div class="kpi-lbl">学習日数</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-val" id="statAvg" style="color:var(--yellow)">0<span style="font-size:14px">分</span></div>
+          <div class="kpi-lbl">1日平均</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-val" id="statSessions2" style="color:var(--pink)">0</div>
+          <div class="kpi-lbl">総セッション数</div>
+        </div>
+      </div>
+      <!-- 週間棒グラフ -->
+      <div class="chart-card">
+        <div class="chart-title">📅 過去7日間の学習時間（分）</div>
+        <div class="bar-chart" id="weekBarChart"></div>
+      </div>
+      <!-- 科目別 -->
+      <div class="chart-card">
+        <div class="chart-title">📚 科目別 累計時間</div>
+        <div class="subj-bars" id="subjBars"></div>
+      </div>
+      <!-- 履歴 -->
+      <div class="chart-card">
+        <div class="chart-title">🕐 学習履歴（新しい順）</div>
+        <div id="histList"><div style="font-size:13px;color:var(--muted);font-weight:700">まだ記録がないよ</div></div>
+      </div>
     </div>
   </div>
 
@@ -264,6 +334,7 @@ select.ob-inp{cursor:pointer}
 <!-- ── NAV ── -->
 <div class="nav" id="nav" style="display:none">
   <div class="ni active" onclick="goSc('home',this)"><div class="ni-icon">🏠</div>ホーム</div>
+  <div class="ni" onclick="goSc('stats',this);renderStats()"><div class="ni-icon">📈</div>統計</div>
 </div>
 
 
@@ -368,6 +439,7 @@ function stopAndSave(){
   totalMinToday += mins;
   timerSec=0; updateTD();
   updateStats(); renderLog(); updateGoalBar();
+  saveLog({ subj: currentSubj, mins, timeRange: timeStr, date: dateStr });
   // スプレッドシートに送信
   sendToSheet({
     name: ob.name,
@@ -449,6 +521,83 @@ function launch(){
 function applyProfile(){
   document.getElementById('hdrAv').textContent = ob.avatar;
   document.getElementById('heroName').textContent = ob.name + 'さん';
+}
+
+// ── ALL TIME LOG (localStorage) ──
+function saveLog(entry){
+  const key = 'terakoya_log';
+  const logs = JSON.parse(localStorage.getItem(key)||'[]');
+  logs.push(entry);
+  localStorage.setItem(key, JSON.stringify(logs));
+}
+function getAllLogs(){
+  return JSON.parse(localStorage.getItem('terakoya_log')||'[]');
+}
+
+// ── RENDER STATS ──
+function renderStats(){
+  const logs = getAllLogs();
+  const SUBJ_C2 = {算数:'#2196f3',国語:'#f59e0b',理科:'#22c55e',社会:'#f97316',英語:'#a855f7',その他:'#94a3b8'};
+
+  // KPI
+  const totalMin = logs.reduce((a,l)=>a+l.mins,0);
+  const days = new Set(logs.map(l=>l.date)).size;
+  const avg = days ? Math.round(totalMin/days) : 0;
+  document.getElementById('statTotalAll').innerHTML = totalMin + '<span style="font-size:14px">分</span>';
+  document.getElementById('statDays').textContent = days;
+  document.getElementById('statAvg').innerHTML = avg + '<span style="font-size:14px">分</span>';
+  document.getElementById('statSessions2').textContent = logs.length;
+
+  // 過去7日間バーチャート
+  const today = new Date();
+  const days7 = [];
+  for(let i=6;i>=0;i--){
+    const d = new Date(today);
+    d.setDate(today.getDate()-i);
+    const key = d.getFullYear()+'/'
+      +String(d.getMonth()+1).padStart(2,'0')+'/'
+      +String(d.getDate()).padStart(2,'0');
+    const label = ['日','月','火','水','木','金','土'][d.getDay()];
+    const mins = logs.filter(l=>l.date===key).reduce((a,l)=>a+l.mins,0);
+    days7.push({label, mins, isToday:i===0});
+  }
+  const maxMin = Math.max(...days7.map(d=>d.mins), 1);
+  document.getElementById('weekBarChart').innerHTML = days7.map(d=>`
+    <div class="bar-col">
+      <div class="bar-val">${d.mins||''}</div>
+      <div class="bar-box" style="height:${Math.round(d.mins/maxMin*80)}px;background:${d.isToday?'#2196f3':'#bfdbfe'}"></div>
+      <div class="bar-lbl" style="color:${d.isToday?'#2196f3':'var(--muted)'};font-weight:${d.isToday?900:700}">${d.label}</div>
+    </div>`).join('');
+
+  // 科目別累計
+  const subjMap = {};
+  logs.forEach(l=>{ subjMap[l.subj]=(subjMap[l.subj]||0)+l.mins; });
+  const subjSorted = Object.entries(subjMap).sort((a,b)=>b[1]-a[1]);
+  const maxSubj = subjSorted.length ? subjSorted[0][1] : 1;
+  document.getElementById('subjBars').innerHTML = subjSorted.length
+    ? subjSorted.map(([s,m])=>`
+      <div class="subj-bar-row">
+        <div class="subj-bar-name">${s}</div>
+        <div class="subj-bar-track"><div class="subj-bar-fill" style="width:${Math.round(m/maxSubj*100)}%;background:${SUBJ_C2[s]||'#94a3b8'}"></div></div>
+        <div class="subj-bar-min">${m}分</div>
+      </div>`).join('')
+    : '<div style="font-size:13px;color:var(--muted);font-weight:700">まだ記録がないよ</div>';
+
+  // 履歴一覧
+  const histEl = document.getElementById('histList');
+  if(!logs.length){
+    histEl.innerHTML='<div style="font-size:13px;color:var(--muted);font-weight:700">まだ記録がないよ</div>';
+    return;
+  }
+  histEl.innerHTML=[...logs].reverse().slice(0,30).map(l=>`
+    <div class="hist-item">
+      <div class="hist-dot" style="background:${SUBJ_C2[l.subj]||'#94a3b8'}"></div>
+      <div class="hist-info">
+        <div class="hist-subj">${l.subj}</div>
+        <div class="hist-date">${l.date} ${l.timeRange}</div>
+      </div>
+      <div class="hist-min">${l.mins}分</div>
+    </div>`).join('');
 }
 
 // ── TOAST ──
