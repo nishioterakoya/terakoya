@@ -103,7 +103,10 @@ select.ob-inp{cursor:pointer}
 .hist-subj{font-size:13px;font-weight:800}
 .hist-date{font-size:11px;color:var(--muted)}
 .hist-min{font-size:13px;font-weight:900;color:var(--yellow)}
-.manual-card{background:#ffffff;border-radius:var(--r);border:1px solid #e2e8f0;margin:0 18px;padding:16px}
+
+/* ── MANUAL INPUT ── */
+.manual-card{background:var(--card);border-radius:var(--r);border:1px solid #e2e8f0;margin:0 18px;padding:16px}
+.manual-row{display:flex;gap:8px;margin-bottom:10px;align-items:center;flex-wrap:wrap}
 .manual-label{font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:5px;display:block}
 .manual-inp{padding:11px 12px;background:#f8fafc;border:2px solid #e2e8f0;border-radius:var(--rs);color:var(--text);font-family:'Nunito',sans-serif;font-size:14px;font-weight:700;outline:none;transition:border-color .2s;width:100%}
 .manual-inp:focus{border-color:#2196f3}
@@ -180,13 +183,13 @@ select.ob-inp{cursor:pointer}
     <!-- step1: 名前・アイコン -->
     <div id="ob-s1" style="display:flex;flex-direction:column;flex:1">
       <div class="ob-hero">
-        <span class="ob-planet">📘</span>
+        <span class="ob-planet">🏮</span>
         <div class="ob-logo">てらこや<em>こべつ</em></div>
-        <div class="ob-tag">まずはプロフィールを作ろう</div>
+        <div class="ob-tag">まずはプロフィールを作ってね📝</div>
       </div>
       <div class="ob-body" style="flex:1">
         <div class="ob-title">ようこそ！👋</div>
-        <div class="ob-sub">名前とアイコンを選ぼう</div>
+        <div class="ob-sub">名前とアイコンを選んでね</div>
         <label class="ob-label">なまえ</label>
         <input class="ob-inp" id="ob-name" type="text" placeholder="例：たろう" maxlength="10" oninput="chkName()">
         <label class="ob-label">アイコン</label>
@@ -216,10 +219,10 @@ select.ob-inp{cursor:pointer}
           <option value="150">150分</option>
           <option value="180">180分</option>
         </select>
-        <label class="ob-label">合言葉</label>
-        <input class="ob-inp" id="ob-pass" type="text" placeholder="合言葉を入れよう" oninput="chkName()" autocomplete="off" style="margin-bottom:4px">
-        <div id="pass-hint" style="font-size:11px;color:var(--pink);font-weight:800;margin-bottom:12px;display:none">合言葉が違います</div>
-        <button class="ob-btn" id="ob-next" onclick="obComplete()" disabled>はじめる</button>
+        <label class="ob-label">🔑 合言葉</label>
+        <input class="ob-inp" id="ob-pass" type="text" placeholder="先生から教えてもらった合言葉を入れてね" oninput="chkName()" autocomplete="off" style="margin-bottom:4px">
+        <div id="pass-hint" style="font-size:11px;color:var(--pink);font-weight:800;margin-bottom:12px;display:none">❌ 合言葉が違います。</div>
+        <button class="ob-btn" id="ob-next" onclick="obComplete()" disabled>はじめる 🎉</button>
       </div>
     </div>
 
@@ -243,7 +246,7 @@ select.ob-inp{cursor:pointer}
   <!-- ── HOME ── -->
   <div class="screen active" id="sc-home">
     <div class="hdr">
-      <div class="hdr-logo">てらこや<em>こべつ</em> 📘</div>
+      <div class="hdr-logo">てらこや<em>こべつ</em> 🏮</div>
       <div class="hdr-av" id="hdrAv">🐯</div>
     </div>
 
@@ -272,8 +275,8 @@ select.ob-inp{cursor:pointer}
         <button class="btn btn-red" onclick="stopAndSave()" style="font-size:14px;padding:12px">■ 終了・保存</button>
       </div>
     </div>
-    
- <div class="sec">✏️ あとから記録する</div>
+
+    <div class="sec">✏️ あとから記録する</div>
     <div class="manual-card">
       <div class="manual-grid">
         <div>
@@ -286,7 +289,7 @@ select.ob-inp{cursor:pointer}
         </div>
       </div>
       <label class="manual-label">科目</label>
-      <div class="manual-subj-grid">
+      <div class="manual-subj-grid" id="manualSubjPick">
         <div class="msc sel" data-s="算数" onclick="pickMS(this)"><span class="e">🔢</span>算数</div>
         <div class="msc" data-s="国語" onclick="pickMS(this)"><span class="e">📖</span>国語</div>
         <div class="msc" data-s="理科" onclick="pickMS(this)"><span class="e">🔬</span>理科</div>
@@ -298,7 +301,7 @@ select.ob-inp{cursor:pointer}
       <input class="manual-inp" id="manualMemo" placeholder="例：塾の授業、自習室など" style="margin-bottom:10px">
       <button class="btn btn-blue" onclick="saveManual()" style="width:100%;padding:12px;font-size:14px">✏️ 記録を追加する</button>
     </div>
-    
+
     <div class="gbar-wrap">
       <div class="gbar-top">
         <span>🎯 今日の目標</span>
@@ -361,7 +364,7 @@ select.ob-inp{cursor:pointer}
       <!-- 履歴 -->
       <div class="chart-card">
         <div class="chart-title">🕐 学習履歴（新しい順）</div>
-        <div id="histList"><div style="font-size:13px;color:var(--muted);font-weight:700">まだ記録がないよ</div></div>
+        <div id="histList"><div style="font-size:13px;color:var(--muted);font-weight:700">まだ記録がありません</div></div>
       </div>
     </div>
   </div>
@@ -439,7 +442,7 @@ function goSc(name,el){
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbz56XfZd1igcnP1idjs3POCjQ6VB0vsJ3QInWW30xgnWGKZLAB2zCUBnSG9-TpAE6z1/exec';
 
 // ── TIMER ──
-let timerSec=0, timerRunning=false, timerInterval=null, currentSubj='算数', timerStartTime=null, timerBaseTime=0;
+let timerSec=0, timerRunning=false, timerInterval=null, currentSubj='算数';
 let goalMin=60, totalMinToday=0;
 const logData=[];
 const subjectColors={算数:'var(--blue)',国語:'var(--yellow)',理科:'var(--green)',社会:'var(--orange,#ffa94d)',英語:'var(--purple,#b197fc)',その他:'var(--muted)'};
@@ -451,19 +454,14 @@ function pickS(el){
 }
 function toggleTimer(){
   if(timerRunning){
-    timerBaseTime = timerSec;
     clearInterval(timerInterval); timerRunning=false;
     document.getElementById('timerBtn').textContent='▶ スタート';
     document.getElementById('timerD').classList.remove('run');
   } else {
-    timerStartTime = Date.now() - timerBaseTime*1000;
     timerRunning=true;
     document.getElementById('timerBtn').textContent='⏸ 一時停止';
     document.getElementById('timerD').classList.add('run');
-    timerInterval=setInterval(()=>{
-      timerSec = Math.floor((Date.now() - timerStartTime)/1000);
-      updateTD();
-    },1000);
+    timerInterval=setInterval(()=>{ timerSec++; updateTD(); },1000);
   }
 }
 function stopAndSave(){
@@ -492,7 +490,7 @@ function stopAndSave(){
     timeRange: timeStr,
     goalMin: ob.goalMin,
   });
-  showToast(`✅ ${currentSubj} ${mins}分 を記録しました！`);
+  showToast(`✅ ${currentSubj} ${mins}分 を記録したよ！`);
 }
 
 // スプレッドシートへ送信
@@ -516,7 +514,7 @@ function updateStats(){
 function renderLog(){
   const el=document.getElementById('logList');
   if(!logData.length){
-    el.innerHTML='<div style="padding:16px 18px;font-size:13px;color:var(--muted);font-weight:700">まだ記録がないよ。タイマーをスタートしよう！</div>';
+    el.innerHTML='<div style="padding:16px 18px;font-size:13px;color:var(--muted);font-weight:700">まだ記録がありません。タイマーをスタートしよう！</div>';
     return;
   }
   el.innerHTML=[...logData].reverse().map(l=>`
@@ -537,40 +535,67 @@ function updateGoalBar(){
 
 
 
-// ── OB FUNCTIONS ──
+
+
+// ── MANUAL INPUT ──
 let manualSubj = '算数';
+
 function pickMS(el){
   document.querySelectorAll('.msc').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel');
   manualSubj = el.dataset.s;
 }
+
 function saveManual(){
   const dateVal = document.getElementById('manualDate').value;
   const minsVal = parseInt(document.getElementById('manualMins').value);
-  const memo = document.getElementById('manualMemo').value.trim();
+  const memo    = document.getElementById('manualMemo').value.trim();
+
   if(!dateVal){ showToast('⚠ 日付を選んでね'); return; }
   if(!minsVal || minsVal < 1){ showToast('⚠ 時間（分）を入力してね'); return; }
+
   const d = new Date(dateVal);
   const hm = s=>String(s).padStart(2,'0');
   const dateStr = d.getFullYear()+'/'+hm(d.getMonth()+1)+'/'+hm(d.getDate());
   const timeRange = memo || '手動入力';
-  const todayStr = (()=>{ const n=new Date(); return n.getFullYear()+'/'+hm(n.getMonth()+1)+'/'+hm(n.getDate()); })();
+
+  // 今日の分ならログにも追加
+  const todayStr = (()=>{
+    const n=new Date();
+    return n.getFullYear()+'/'+hm(n.getMonth()+1)+'/'+hm(n.getDate());
+  })();
   if(dateStr === todayStr){
     logData.push({ subj: manualSubj, mins: minsVal, timeStr: timeRange });
     totalMinToday += minsVal;
     updateStats(); renderLog(); updateGoalBar();
   }
+
+  // localStorageに保存
   saveLog({ subj: manualSubj, mins: minsVal, timeRange, date: dateStr });
-  sendToSheet({ name: ob.name, grade: ob.grade, date: dateStr, subject: manualSubj, minutes: minsVal, timeRange, goalMin: ob.goalMin });
+
+  // スプレッドシートに送信
+  sendToSheet({
+    name: ob.name, grade: ob.grade,
+    date: dateStr, subject: manualSubj,
+    minutes: minsVal, timeRange, goalMin: ob.goalMin,
+  });
+
+  // リセット
   document.getElementById('manualMins').value = '';
   document.getElementById('manualMemo').value = '';
   showToast(`✅ ${manualSubj} ${minsVal}分 を記録したよ！`);
 }
+
+// 日付のデフォルトを今日にする
 (function setDefaultDate(){
   const inp = document.getElementById('manualDate');
-  if(inp){ const n=new Date(); const hm=s=>String(s).padStart(2,'0'); inp.value = n.getFullYear()+'-'+hm(n.getMonth()+1)+'-'+hm(n.getDate()); }
+  if(inp){
+    const n=new Date();
+    const hm=s=>String(s).padStart(2,'0');
+    inp.value = n.getFullYear()+'-'+hm(n.getMonth()+1)+'-'+hm(n.getDate());
+  }
 })();
-  
+
 // ── ALL TIME LOG (localStorage) ──
 function saveLog(entry){
   const key = 'terakoya_log';
