@@ -103,6 +103,15 @@ select.ob-inp{cursor:pointer}
 .hist-subj{font-size:13px;font-weight:800}
 .hist-date{font-size:11px;color:var(--muted)}
 .hist-min{font-size:13px;font-weight:900;color:var(--yellow)}
+.manual-card{background:#ffffff;border-radius:var(--r);border:1px solid #e2e8f0;margin:0 18px;padding:16px}
+.manual-label{font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:5px;display:block}
+.manual-inp{padding:11px 12px;background:#f8fafc;border:2px solid #e2e8f0;border-radius:var(--rs);color:var(--text);font-family:'Nunito',sans-serif;font-size:14px;font-weight:700;outline:none;transition:border-color .2s;width:100%}
+.manual-inp:focus{border-color:#2196f3}
+.manual-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.manual-subj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px}
+.msc{padding:8px 4px;border-radius:var(--rs);background:#f8fafc;border:2px solid transparent;text-align:center;cursor:pointer;transition:all .15s;font-size:11px;font-weight:800;color:var(--muted)}
+.msc .e{font-size:18px;display:block;margin-bottom:2px}
+.msc.sel{border-color:#2196f3;background:#e0f2fe;color:#2196f3}
 .btn{border:none;border-radius:var(--rs);font-family:inherit;font-weight:800;cursor:pointer;transition:all .15s}
 .btn:active{transform:scale(.96)}
 .btn-blue{background:#2196f3;color:#ffffff}
@@ -263,7 +272,33 @@ select.ob-inp{cursor:pointer}
         <button class="btn btn-red" onclick="stopAndSave()" style="font-size:14px;padding:12px">■ 終了・保存</button>
       </div>
     </div>
-
+    
+ <div class="sec">✏️ あとから記録する</div>
+    <div class="manual-card">
+      <div class="manual-grid">
+        <div>
+          <label class="manual-label">日付</label>
+          <input class="manual-inp" type="date" id="manualDate">
+        </div>
+        <div>
+          <label class="manual-label">時間（分）</label>
+          <input class="manual-inp" type="number" id="manualMins" placeholder="例：60" min="1" max="600">
+        </div>
+      </div>
+      <label class="manual-label">科目</label>
+      <div class="manual-subj-grid">
+        <div class="msc sel" data-s="算数" onclick="pickMS(this)"><span class="e">🔢</span>算数</div>
+        <div class="msc" data-s="国語" onclick="pickMS(this)"><span class="e">📖</span>国語</div>
+        <div class="msc" data-s="理科" onclick="pickMS(this)"><span class="e">🔬</span>理科</div>
+        <div class="msc" data-s="社会" onclick="pickMS(this)"><span class="e">🌏</span>社会</div>
+        <div class="msc" data-s="英語" onclick="pickMS(this)"><span class="e">🔤</span>英語</div>
+        <div class="msc" data-s="その他" onclick="pickMS(this)"><span class="e">📝</span>その他</div>
+      </div>
+      <label class="manual-label">メモ（任意）</label>
+      <input class="manual-inp" id="manualMemo" placeholder="例：塾の授業、自習室など" style="margin-bottom:10px">
+      <button class="btn btn-blue" onclick="saveManual()" style="width:100%;padding:12px;font-size:14px">✏️ 記録を追加する</button>
+    </div>
+    
     <div class="gbar-wrap">
       <div class="gbar-top">
         <span>🎯 今日の目標</span>
@@ -529,7 +564,39 @@ function applyProfile(){
   document.getElementById('hdrAv').textContent = ob.avatar;
   document.getElementById('heroName').textContent = ob.name + 'さん';
 }
-
+let manualSubj = '算数';
+function pickMS(el){
+  document.querySelectorAll('.msc').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');
+  manualSubj = el.dataset.s;
+}
+function saveManual(){
+  const dateVal = document.getElementById('manualDate').value;
+  const minsVal = parseInt(document.getElementById('manualMins').value);
+  const memo = document.getElementById('manualMemo').value.trim();
+  if(!dateVal){ showToast('⚠ 日付を選んでね'); return; }
+  if(!minsVal || minsVal < 1){ showToast('⚠ 時間（分）を入力してね'); return; }
+  const d = new Date(dateVal);
+  const hm = s=>String(s).padStart(2,'0');
+  const dateStr = d.getFullYear()+'/'+hm(d.getMonth()+1)+'/'+hm(d.getDate());
+  const timeRange = memo || '手動入力';
+  const todayStr = (()=>{ const n=new Date(); return n.getFullYear()+'/'+hm(n.getMonth()+1)+'/'+hm(n.getDate()); })();
+  if(dateStr === todayStr){
+    logData.push({ subj: manualSubj, mins: minsVal, timeStr: timeRange });
+    totalMinToday += minsVal;
+    updateStats(); renderLog(); updateGoalBar();
+  }
+  saveLog({ subj: manualSubj, mins: minsVal, timeRange, date: dateStr });
+  sendToSheet({ name: ob.name, grade: ob.grade, date: dateStr, subject: manualSubj, minutes: minsVal, timeRange, goalMin: ob.goalMin });
+  document.getElementById('manualMins').value = '';
+  document.getElementById('manualMemo').value = '';
+  showToast(`✅ ${manualSubj} ${minsVal}分 を記録したよ！`);
+}
+(function setDefaultDate(){
+  const inp = document.getElementById('manualDate');
+  if(inp){ const n=new Date(); const hm=s=>String(s).padStart(2,'0'); inp.value = n.getFullYear()+'-'+hm(n.getMonth()+1)+'-'+hm(n.getDate()); }
+})();
+  
 // ── ALL TIME LOG (localStorage) ──
 function saveLog(entry){
   const key = 'terakoya_log';
