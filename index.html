@@ -172,6 +172,32 @@ select.ob-inp{cursor:pointer}
 
 .toast{position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-80px);background:var(--card);border:1px solid rgba(79,195,247,.2);border-radius:12px;padding:10px 18px;font-size:13px;font-weight:800;z-index:900;transition:transform .3s;white-space:nowrap}
 .toast.show{transform:translateX(-50%) translateY(0)}
+
+/* ── SETTINGS ── */
+.settings-page{padding:0 18px 16px}
+.settings-section{margin-bottom:16px}
+.settings-section-title{font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:1px;padding:14px 0 8px}
+.settings-card{background:var(--card);border-radius:var(--r);border:1px solid #e2e8f0;overflow:hidden}
+.settings-row{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid #f1f5f9}
+.settings-row:last-child{border-bottom:none}
+.settings-row-icon{font-size:20px;width:28px;text-align:center;flex-shrink:0}
+.settings-row-info{flex:1}
+.settings-row-label{font-size:13px;font-weight:800;color:var(--text)}
+.settings-row-sub{font-size:11px;color:var(--muted);margin-top:2px}
+.settings-row-val{font-size:13px;font-weight:800;color:var(--blue)}
+.settings-inp{padding:8px 10px;background:#f8fafc;border:2px solid #e2e8f0;border-radius:var(--rs);color:var(--text);font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;outline:none;transition:border-color .2s;width:100%;margin-top:8px}
+.settings-inp:focus{border-color:#2196f3}
+select.settings-inp{cursor:pointer}
+.settings-av-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.settings-av{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;border:3px solid transparent;background:#f8fafc;transition:all .2s}
+.settings-av.sel{border-color:#2196f3;background:#e0f2fe}
+.danger-card{background:#fff5f7;border-radius:var(--r);border:1px solid #fecdd3;overflow:hidden}
+.danger-row{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid #fecdd3;cursor:pointer;transition:background .15s}
+.danger-row:last-child{border-bottom:none}
+.danger-row:active{background:#ffe4e8}
+.danger-row-icon{font-size:20px;width:28px;text-align:center}
+.danger-row-label{flex:1;font-size:13px;font-weight:800;color:#e11d48}
+.danger-row-sub{font-size:11px;color:#fb7185;margin-top:2px}
 </style>
 </head>
 <body>
@@ -221,7 +247,7 @@ select.ob-inp{cursor:pointer}
         </select>
         <label class="ob-label">🔑 合言葉</label>
         <input class="ob-inp" id="ob-pass" type="text" placeholder="先生から教えてもらった合言葉を入れてね" oninput="chkName()" autocomplete="off" style="margin-bottom:4px">
-        <div id="pass-hint" style="font-size:11px;color:var(--pink);font-weight:800;margin-bottom:12px;display:none">❌ 合言葉が違います。</div>
+        <div id="pass-hint" style="font-size:11px;color:var(--pink);font-weight:800;margin-bottom:12px;display:none">❌ 合言葉が違うよ。先生に確認してね。</div>
         <button class="ob-btn" id="ob-next" onclick="obComplete()" disabled>はじめる 🎉</button>
       </div>
     </div>
@@ -369,12 +395,112 @@ select.ob-inp{cursor:pointer}
     </div>
   </div>
 
+  <!-- ── SETTINGS ── -->
+  <div class="screen" id="sc-settings">
+    <div class="hdr">
+      <div class="hdr-logo">てらこや<em>こべつ</em> 📘</div>
+      <div class="hdr-av" id="hdrAv3">🐯</div>
+    </div>
+    <div class="sec">⚙️ 設定</div>
+    <div class="settings-page">
+
+      <!-- プロフィール -->
+      <div class="settings-section">
+        <div class="settings-section-title">プロフィール</div>
+        <div class="settings-card">
+          <div class="settings-row">
+            <div class="settings-row-icon">✏️</div>
+            <div class="settings-row-info">
+              <div class="settings-row-label">名前</div>
+              <input class="settings-inp" id="set-name" type="text" maxlength="10" placeholder="名前を入力">
+            </div>
+          </div>
+          <div class="settings-row">
+            <div class="settings-row-icon">🎭</div>
+            <div class="settings-row-info">
+              <div class="settings-row-label">アイコン</div>
+              <div class="settings-av-row" id="setAvRow">
+                <div class="settings-av" data-av="🐯" onclick="pickSetAv(this)">🐯</div>
+                <div class="settings-av" data-av="🐼" onclick="pickSetAv(this)">🐼</div>
+                <div class="settings-av" data-av="🦊" onclick="pickSetAv(this)">🦊</div>
+                <div class="settings-av" data-av="🐸" onclick="pickSetAv(this)">🐸</div>
+                <div class="settings-av" data-av="🦁" onclick="pickSetAv(this)">🦁</div>
+                <div class="settings-av" data-av="🐧" onclick="pickSetAv(this)">🐧</div>
+                <div class="settings-av" data-av="🦄" onclick="pickSetAv(this)">🦄</div>
+                <div class="settings-av" data-av="🐉" onclick="pickSetAv(this)">🐉</div>
+              </div>
+            </div>
+          </div>
+          <div class="settings-row">
+            <div class="settings-row-icon">🎓</div>
+            <div class="settings-row-info">
+              <div class="settings-row-label">学年</div>
+              <select class="settings-inp" id="set-grade">
+                <option value="">学年選択</option>
+                <option>小4</option><option>小5</option><option>小6</option>
+                <option>中1</option><option>中2</option><option>中3</option>
+                <option>高1</option><option>高2</option><option>高3</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 目標 -->
+      <div class="settings-section">
+        <div class="settings-section-title">学習目標</div>
+        <div class="settings-card">
+          <div class="settings-row">
+            <div class="settings-row-icon">🎯</div>
+            <div class="settings-row-info">
+              <div class="settings-row-label">1日の目標時間</div>
+              <select class="settings-inp" id="set-goal">
+                <option value="30">30分</option>
+                <option value="60">60分</option>
+                <option value="90">90分</option>
+                <option value="120">120分</option>
+                <option value="150">150分</option>
+                <option value="180">180分</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 保存ボタン -->
+      <button class="btn btn-blue" onclick="saveSettings()" style="width:100%;padding:14px;font-size:14px;margin-bottom:20px">✓ 設定を保存する</button>
+
+      <!-- データ管理 -->
+      <div class="settings-section">
+        <div class="settings-section-title">データ管理</div>
+        <div class="danger-card">
+          <div class="danger-row" onclick="clearLogs()">
+            <div class="danger-row-icon">🗑️</div>
+            <div style="flex:1">
+              <div class="danger-row-label">学習ログを削除</div>
+              <div class="danger-row-sub">統計・履歴データを全て消去します</div>
+            </div>
+          </div>
+          <div class="danger-row" onclick="clearAll()">
+            <div class="danger-row-icon">⚠️</div>
+            <div style="flex:1">
+              <div class="danger-row-label">全データをリセット</div>
+              <div class="danger-row-sub">登録情報・ログを全て消去して最初からやり直す</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
 </div><!-- /#app -->
 
 <!-- ── NAV ── -->
 <div class="nav" id="nav" style="display:none">
   <div class="ni active" onclick="goSc('home',this)"><div class="ni-icon">🏠</div>ホーム</div>
   <div class="ni" onclick="goSc('stats',this);renderStats()"><div class="ni-icon">📈</div>統計</div>
+  <div class="ni" onclick="goSc('settings',this);loadSettings()"><div class="ni-icon">⚙️</div>設定</div>
 </div>
 
 
@@ -426,6 +552,7 @@ function launch(){
 function applyProfile(){
   document.getElementById('hdrAv').textContent = ob.avatar;
   document.getElementById('hdrAv2').textContent = ob.avatar;
+  document.getElementById('hdrAv3').textContent = ob.avatar;
   document.getElementById('heroName').textContent = ob.name + 'さん';
 }
 
@@ -442,7 +569,7 @@ function goSc(name,el){
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbz56XfZd1igcnP1idjs3POCjQ6VB0vsJ3QInWW30xgnWGKZLAB2zCUBnSG9-TpAE6z1/exec';
 
 // ── TIMER ──
-let timerSec=0, timerRunning=false, timerInterval=null, currentSubj='算数';
+let timerSec=0, timerRunning=false, timerInterval=null, currentSubj='算数', timerStartTime=null, timerBaseTime=0;
 let goalMin=60, totalMinToday=0;
 const logData=[];
 const subjectColors={算数:'var(--blue)',国語:'var(--yellow)',理科:'var(--green)',社会:'var(--orange,#ffa94d)',英語:'var(--purple,#b197fc)',その他:'var(--muted)'};
@@ -454,14 +581,19 @@ function pickS(el){
 }
 function toggleTimer(){
   if(timerRunning){
+    timerBaseTime = timerSec;
     clearInterval(timerInterval); timerRunning=false;
     document.getElementById('timerBtn').textContent='▶ スタート';
     document.getElementById('timerD').classList.remove('run');
   } else {
+    timerStartTime = Date.now() - timerBaseTime*1000;
     timerRunning=true;
     document.getElementById('timerBtn').textContent='⏸ 一時停止';
     document.getElementById('timerD').classList.add('run');
-    timerInterval=setInterval(()=>{ timerSec++; updateTD(); },1000);
+    timerInterval=setInterval(()=>{
+      timerSec = Math.floor((Date.now() - timerStartTime)/1000);
+      updateTD();
+    },1000);
   }
 }
 function stopAndSave(){
@@ -477,7 +609,7 @@ function stopAndSave(){
   const dateStr = `${now.getFullYear()}/${hm(now.getMonth()+1)}/${hm(now.getDate())}`;
   logData.push({ subj: currentSubj, mins, timeStr });
   totalMinToday += mins;
-  timerSec=0; updateTD();
+  timerSec=0; timerBaseTime=0; updateTD();
   updateStats(); renderLog(); updateGoalBar();
   saveLog({ subj: currentSubj, mins, timeRange: timeStr, date: dateStr });
   // スプレッドシートに送信
@@ -671,6 +803,56 @@ function renderStats(){
       </div>
       <div class="hist-min">${l.mins}分</div>
     </div>`).join('');
+}
+
+// ── SETTINGS ──
+function loadSettings(){
+  document.getElementById('set-name').value = ob.name || '';
+  document.getElementById('set-grade').value = ob.grade || '';
+  document.getElementById('set-goal').value = ob.goalMin || 60;
+  // アイコン選択
+  document.querySelectorAll('.settings-av').forEach(a=>{
+    a.classList.toggle('sel', a.dataset.av === ob.avatar);
+  });
+}
+function pickSetAv(el){
+  document.querySelectorAll('.settings-av').forEach(a=>a.classList.remove('sel'));
+  el.classList.add('sel');
+}
+function saveSettings(){
+  const name = document.getElementById('set-name').value.trim();
+  const grade = document.getElementById('set-grade').value;
+  const goal = parseInt(document.getElementById('set-goal').value);
+  const selAv = document.querySelector('.settings-av.sel');
+  if(!name){ showToast('⚠ 名前を入力してください'); return; }
+  if(!grade){ showToast('⚠ 学年を選択してください'); return; }
+  ob.name = name;
+  ob.grade = grade;
+  ob.goalMin = goal;
+  if(selAv) ob.avatar = selAv.dataset.av;
+  goalMin = goal;
+  // 保存
+  localStorage.setItem('ob_d', JSON.stringify(ob));
+  // 画面に反映
+  applyProfile();
+  updateGoalBar();
+  showToast('✅ 設定を保存しました！');
+}
+function clearLogs(){
+  if(!confirm('学習ログを全て削除しますか？
+統計・履歴データが消えます。')) return;
+  localStorage.removeItem('terakoya_log');
+  totalMinToday = 0;
+  logData.length = 0;
+  updateStats(); renderLog(); updateGoalBar();
+  showToast('🗑️ 学習ログを削除しました');
+}
+function clearAll(){
+  if(!confirm('全データをリセットしますか？
+登録情報・ログが全て消えて最初からやり直しになります。')) return;
+  localStorage.clear();
+  showToast('リセットしました。再読み込みします...');
+  setTimeout(()=>location.reload(), 1500);
 }
 
 // ── TOAST ──
