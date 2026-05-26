@@ -839,7 +839,7 @@ function saveSettings(){
   showToast('✅ 設定を保存しました！');
 }
 function clearLogs(){
-  if(!confirm('学習ログを全て削除しますか？
+  if(!confirm('学習ログを全て削除しますか？\n統計・履歴データが消えます。')) return;
 統計・履歴データが消えます。')) return;
   localStorage.removeItem('terakoya_log');
   totalMinToday = 0;
@@ -848,7 +848,7 @@ function clearLogs(){
   showToast('🗑️ 学習ログを削除しました');
 }
 function clearAll(){
-  if(!confirm('全データをリセットしますか？
+  if(!confirm('全データをリセットしますか？\n登録情報・ログが全て消えて最初からやり直しになります。')) return;
 登録情報・ログが全て消えて最初からやり直しになります。')) return;
   localStorage.clear();
   showToast('リセットしました。再読み込みします...');
