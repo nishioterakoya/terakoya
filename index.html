@@ -404,7 +404,7 @@ function goSc(name,el){
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbz56XfZd1igcnP1idjs3POCjQ6VB0vsJ3QInWW30xgnWGKZLAB2zCUBnSG9-TpAE6z1/exec';
 
 // ── TIMER ──
-let timerSec=0, timerRunning=false, timerInterval=null, currentSubj='算数';
+let timerSec=0, timerRunning=false, timerInterval=null, currentSubj='算数', timerStartTime=null, timerBaseTime=0;
 let goalMin=60, totalMinToday=0;
 const logData=[];
 const subjectColors={算数:'var(--blue)',国語:'var(--yellow)',理科:'var(--green)',社会:'var(--orange,#ffa94d)',英語:'var(--purple,#b197fc)',その他:'var(--muted)'};
@@ -416,14 +416,19 @@ function pickS(el){
 }
 function toggleTimer(){
   if(timerRunning){
+    timerBaseTime = timerSec;
     clearInterval(timerInterval); timerRunning=false;
     document.getElementById('timerBtn').textContent='▶ スタート';
     document.getElementById('timerD').classList.remove('run');
   } else {
+    timerStartTime = Date.now() - timerBaseTime*1000;
     timerRunning=true;
     document.getElementById('timerBtn').textContent='⏸ 一時停止';
     document.getElementById('timerD').classList.add('run');
-    timerInterval=setInterval(()=>{ timerSec++; updateTD(); },1000);
+    timerInterval=setInterval(()=>{
+      timerSec = Math.floor((Date.now() - timerStartTime)/1000);
+      updateTD();
+    },1000);
   }
 }
 function stopAndSave(){
