@@ -538,32 +538,6 @@ function updateGoalBar(){
 
 
 // ── OB FUNCTIONS ──
-function obComplete(){
-  ob.name = document.getElementById('ob-name').value.trim();
-  ob.grade = document.getElementById('ob-grade').value;
-  ob.goalMin = parseInt(document.getElementById('ob-goal').value);
-  document.getElementById('ob-s1').style.display='none';
-  document.getElementById('ob-done').style.display='flex';
-  document.getElementById('prof-card').innerHTML=`
-    <div class="prof-row" style="margin-bottom:10px">
-      <div class="prof-av">${ob.avatar}</div>
-      <div><div class="prof-name">${ob.name}</div><div class="prof-grade">${ob.grade} ・ 目標${ob.goalMin}分/日</div></div>
-    </div>`;
-}
-function launch(){
-  applyProfile();
-  document.getElementById('ob').classList.add('hide');
-  document.getElementById('app').style.display='flex';
-  document.getElementById('nav').style.display='flex';
-  goalMin = ob.goalMin;
-  updateGoalBar();
-  localStorage.setItem('ob','1');
-  localStorage.setItem('ob_d', JSON.stringify(ob));
-}
-function applyProfile(){
-  document.getElementById('hdrAv').textContent = ob.avatar;
-  document.getElementById('heroName').textContent = ob.name + 'さん';
-}
 let manualSubj = '算数';
 function pickMS(el){
   document.querySelectorAll('.msc').forEach(c=>c.classList.remove('sel'));
