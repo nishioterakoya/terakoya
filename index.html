@@ -13,8 +13,8 @@
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);max-width:100%;min-height:100vh;overflow-x:hidden}
- 
- 
+
+
 /* ── ONBOARDING ── */
 #ob{position:relative;z-index:500;background:#ffffff;display:flex;flex-direction:column;align-items:center;overflow-y:auto;min-height:100vh}
 #ob.hide{display:none}
@@ -40,7 +40,7 @@ select.ob-inp{cursor:pointer}
 .ob-btn{width:100%;padding:14px;background:#2196f3;color:#ffffff;border:none;border-radius:12px;font-family:'Nunito',sans-serif;font-size:15px;font-weight:900;cursor:pointer;transition:all .15s;margin-top:8px}
 .ob-btn:active{transform:scale(.97)}
 .ob-btn:disabled{opacity:.4;cursor:not-allowed}
- 
+
 /* complete */
 .ob-done{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px;text-align:center}
 .ob-done-icon{font-size:72px;animation:pop .5s cubic-bezier(.175,.885,.32,1.275);display:block}
@@ -50,21 +50,21 @@ select.ob-inp{cursor:pointer}
 .prof-av{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;border:3px solid #2196f3}
 .prof-name{font-size:19px;font-weight:900}
 .prof-grade{font-size:12px;color:var(--muted);font-weight:700;margin-top:2px}
- 
+
 /* ── MAIN APP ── */
 #app{display:none;flex-direction:column;min-height:100vh;padding-bottom:76px;position:relative;z-index:1}
 #app.show{display:flex}
- 
+
 .hdr{padding:13px 18px 10px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;background:#ffffff;border-bottom:1px solid #e2e8f0;box-shadow:0 1px 4px rgba(0,0,0,.06)}
 .hdr-logo{font-family:'Zen Maru Gothic',sans-serif;font-size:19px;font-weight:900;color:#2196f3}
 .hdr-logo em{color:var(--yellow);font-style:normal}
 .hdr-av{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;border:2px solid #2196f3;background:#e0f2fe}
- 
+
 .nav{position:sticky;bottom:0;width:100%;background:#ffffff;border-top:1px solid #e2e8f0;box-shadow:0 -1px 4px rgba(0,0,0,.04);display:flex;z-index:100}
 .ni{flex:1;padding:10px 0 7px;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;color:var(--muted);font-size:10px;font-weight:800;transition:color .2s}
 .ni.active{color:#2196f3}
 .ni-icon{font-size:22px}
- 
+
 .screen{display:none;flex-direction:column}
 .screen.active{display:flex}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
@@ -73,10 +73,10 @@ select.ob-inp{cursor:pointer}
 .screen.active>*:nth-child(3){animation-delay:.1s}
 .screen.active>*:nth-child(4){animation-delay:.15s}
 .screen.active>*:nth-child(5){animation-delay:.2s}
- 
+
 .sec{padding:16px 18px 8px;font-size:11px;font-weight:800;letter-spacing:1.2px;color:var(--muted);text-transform:uppercase}
 .card{background:var(--card);border-radius:var(--r);border:1px solid #e2e8f0}
- 
+
 /* ── STATS PAGE ── */
 .stats-page{padding:0 18px 16px}
 .kpi-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px}
@@ -103,7 +103,7 @@ select.ob-inp{cursor:pointer}
 .hist-subj{font-size:13px;font-weight:800}
 .hist-date{font-size:11px;color:var(--muted)}
 .hist-min{font-size:13px;font-weight:900;color:var(--yellow)}
- 
+
 /* ── MANUAL INPUT ── */
 .manual-card{background:var(--card);border-radius:var(--r);border:1px solid #e2e8f0;margin:0 18px;padding:16px}
 .manual-row{display:flex;gap:8px;margin-bottom:10px;align-items:center;flex-wrap:wrap}
@@ -120,7 +120,7 @@ select.ob-inp{cursor:pointer}
 .btn-blue{background:#2196f3;color:#ffffff}
 .btn-ghost{background:#f1f5f9;color:#1e293b;border:1px solid #e2e8f0}
 .btn-red{background:#fce7f3;color:#ec4899;border:1px solid #fbcfe8}
- 
+
 /* ── HOME ── */
 .hero{margin:14px 18px 0;background:linear-gradient(135deg,#e0f2fe,#f0f9ff);border-radius:var(--r);padding:18px;border:1px solid rgba(79,195,247,.15);position:relative;overflow:hidden}
 .hero::after{content:'📖';position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:48px;opacity:.18}
@@ -128,13 +128,13 @@ select.ob-inp{cursor:pointer}
 .hero-g strong{color:var(--blue)}
 .hero-t{font-family:'Zen Maru Gothic',sans-serif;font-size:18px;font-weight:900;line-height:1.3}
 .streak{margin-top:10px;display:inline-flex;align-items:center;gap:6px;background:#fef9c3;border:1px solid #fde047;border-radius:20px;padding:5px 12px;font-size:12px;font-weight:800;color:var(--yellow)}
- 
+
 /* subject picker */
 .spick{margin:10px 18px 0;display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
 .sc{padding:9px 4px;border-radius:var(--rs);background:var(--card);border:2px solid transparent;text-align:center;cursor:pointer;transition:all .15s;font-size:11px;font-weight:800;color:var(--muted)}
 .sc .e{font-size:20px;display:block;margin-bottom:3px}
 .sc.sel{border-color:#2196f3;background:#e0f2fe;color:#2196f3}
- 
+
 /* timer */
 .tcrd{margin:10px 18px 0;background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border-radius:var(--r);padding:18px;border:1px solid #bfdbfe;text-align:center}
 .tl{font-size:11px;color:var(--muted);margin-bottom:6px;font-weight:700}
@@ -145,20 +145,20 @@ select.ob-inp{cursor:pointer}
 .ts span{background:rgba(79,195,247,.1);border-radius:20px;padding:3px 10px;color:var(--blue);font-weight:800}
 .tc{display:flex;gap:8px}
 .tc .btn{flex:1;padding:12px;font-size:14px}
- 
+
 /* goal bar */
 .gbar-wrap{margin:10px 18px 0;background:var(--card);border-radius:var(--r);padding:14px;border:1px solid #e2e8f0}
 .gbar-top{display:flex;justify-content:space-between;font-size:12px;font-weight:800;margin-bottom:8px}
 .gbar{height:8px;background:var(--surface);border-radius:4px;overflow:hidden}
 .gbar-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--blue),var(--green));transition:width .6s ease}
 .gbar-note{font-size:11px;color:var(--muted);margin-top:6px;font-weight:700}
- 
+
 /* stats */
 .stats{margin:10px 18px 0;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .stat{background:var(--card);border-radius:var(--rs);padding:12px 8px;text-align:center;border:1px solid #e2e8f0}
 .stat-v{font-size:22px;font-weight:900}
 .stat-l{font-size:10px;color:var(--muted);margin-top:2px;font-weight:700}
- 
+
 /* log */
 .log-item{display:flex;align-items:center;gap:10px;padding:11px 18px;border-bottom:1px solid #f1f5f9}
 .ld{width:9px;height:9px;border-radius:50%;flex-shrink:0}
@@ -166,13 +166,13 @@ select.ob-inp{cursor:pointer}
 .li-s{font-size:13px;font-weight:800}
 .li-t{font-size:11px;color:var(--muted)}
 .li-d{font-size:12px;font-weight:900;color:var(--yellow)}
- 
+
 /* ── QUESTION ── */
- 
- 
+
+
 .toast{position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-80px);background:var(--card);border:1px solid rgba(79,195,247,.2);border-radius:12px;padding:10px 18px;font-size:13px;font-weight:800;z-index:900;transition:transform .3s;white-space:nowrap}
 .toast.show{transform:translateX(-50%) translateY(0)}
- 
+
 /* ── SETTINGS ── */
 .settings-page{padding:0 18px 16px}
 .settings-section{margin-bottom:16px}
@@ -201,21 +201,21 @@ select.settings-inp{cursor:pointer}
 </style>
 </head>
 <body>
- 
+
 <!-- ══ ONBOARDING ══ -->
 <div id="ob">
   <div class="ob-inner">
- 
+
     <!-- step1: 名前・アイコン -->
     <div id="ob-s1" style="display:flex;flex-direction:column;flex:1">
       <div class="ob-hero">
         <span class="ob-planet">🏮</span>
         <div class="ob-logo">てらこや<em>こべつ</em></div>
-        <div class="ob-tag">まずはプロフィールを作ろう</div>
+        <div class="ob-tag">まずはプロフィールを作ってね📝</div>
       </div>
       <div class="ob-body" style="flex:1">
         <div class="ob-title">ようこそ！👋</div>
-        <div class="ob-sub">名前とアイコンを選ぼう</div>
+        <div class="ob-sub">名前とアイコンを選んでね</div>
         <label class="ob-label">なまえ</label>
         <input class="ob-inp" id="ob-name" type="text" placeholder="例：たろう" maxlength="10" oninput="chkName()">
         <label class="ob-label">アイコン</label>
@@ -247,11 +247,11 @@ select.settings-inp{cursor:pointer}
         </select>
         <label class="ob-label">🔑 合言葉</label>
         <input class="ob-inp" id="ob-pass" type="text" placeholder="先生から教えてもらった合言葉を入れてね" oninput="chkName()" autocomplete="off" style="margin-bottom:4px">
-        <div id="pass-hint" style="font-size:11px;color:var(--pink);font-weight:800;margin-bottom:12px;display:none">❌ 合言葉が違います。</div>
+        <div id="pass-hint" style="font-size:11px;color:var(--pink);font-weight:800;margin-bottom:12px;display:none">❌ 合言葉が違うよ。先生に確認してね。</div>
         <button class="ob-btn" id="ob-next" onclick="obComplete()" disabled>はじめる 🎉</button>
       </div>
     </div>
- 
+
     <!-- complete -->
     <div id="ob-done" style="display:none;flex:1">
       <div class="ob-done">
@@ -262,26 +262,26 @@ select.settings-inp{cursor:pointer}
         <button class="ob-btn" onclick="launch()">📚 てらこやこべつをはじめる！</button>
       </div>
     </div>
- 
+
   </div>
 </div>
- 
+
 <!-- ══ MAIN APP ══ -->
 <div id="app">
- 
+
   <!-- ── HOME ── -->
   <div class="screen active" id="sc-home">
     <div class="hdr">
       <div class="hdr-logo">てらこや<em>こべつ</em> 🏮</div>
       <div class="hdr-av" id="hdrAv">🐯</div>
     </div>
- 
+
     <div class="hero">
       <div class="hero-g">こんにちは、<strong id="heroName">さん</strong>！</div>
       <div class="hero-t">今日もいっしょに<br>がんばろう✨</div>
       <div class="streak">🔥 <span id="streakVal">1</span>日連続勉強中！</div>
     </div>
- 
+
     <div class="sec">⏱ 学習タイマー</div>
     <div class="spick" id="spick">
       <div class="sc sel" data-s="算数" onclick="pickS(this)"><span class="e">🔢</span>算数</div>
@@ -291,7 +291,7 @@ select.settings-inp{cursor:pointer}
       <div class="sc" data-s="英語" onclick="pickS(this)"><span class="e">🔤</span>英語</div>
       <div class="sc" data-s="その他" onclick="pickS(this)"><span class="e">📝</span>その他</div>
     </div>
- 
+
     <div class="tcrd">
       <div class="tl">学習時間</div>
       <div class="td" id="timerD">00:00</div>
@@ -301,7 +301,7 @@ select.settings-inp{cursor:pointer}
         <button class="btn btn-red" onclick="stopAndSave()" style="font-size:14px;padding:12px">■ 終了・保存</button>
       </div>
     </div>
- 
+
     <div class="sec">✏️ あとから記録する</div>
     <div class="manual-card">
       <div class="manual-grid">
@@ -327,7 +327,7 @@ select.settings-inp{cursor:pointer}
       <input class="manual-inp" id="manualMemo" placeholder="例：塾の授業、自習室など" style="margin-bottom:10px">
       <button class="btn btn-blue" onclick="saveManual()" style="width:100%;padding:12px;font-size:14px">✏️ 記録を追加する</button>
     </div>
- 
+
     <div class="gbar-wrap">
       <div class="gbar-top">
         <span>🎯 今日の目標</span>
@@ -336,20 +336,20 @@ select.settings-inp{cursor:pointer}
       <div class="gbar"><div class="gbar-fill" id="gbarFill" style="width:0%"></div></div>
       <div class="gbar-note" id="gbarNote">あと60分がんばろう！</div>
     </div>
- 
+
     <div class="sec">📊 今日の記録</div>
     <div class="stats">
       <div class="stat"><div class="stat-v" id="statTotal" style="color:var(--blue)">0<span style="font-size:12px">分</span></div><div class="stat-l">合計時間</div></div>
       <div class="stat"><div class="stat-v" id="statSubjects" style="color:var(--yellow)">0</div><div class="stat-l">科目数</div></div>
       <div class="stat"><div class="stat-v" id="statSessions" style="color:var(--green)">0</div><div class="stat-l">セッション</div></div>
     </div>
- 
+
     <div class="sec">📋 今日の学習ログ</div>
     <div id="logList">
       <div style="padding:16px 18px;font-size:13px;color:var(--muted);font-weight:700">まだ記録がありません。タイマーをスタートしよう！</div>
     </div>
   </div>
- 
+
   <!-- ── STATS ── -->
   <div class="screen" id="sc-stats">
     <div class="hdr">
@@ -394,7 +394,7 @@ select.settings-inp{cursor:pointer}
       </div>
     </div>
   </div>
- 
+
   <!-- ── SETTINGS ── -->
   <div class="screen" id="sc-settings">
     <div class="hdr">
@@ -403,7 +403,7 @@ select.settings-inp{cursor:pointer}
     </div>
     <div class="sec">⚙️ 設定</div>
     <div class="settings-page">
- 
+
       <!-- プロフィール -->
       <div class="settings-section">
         <div class="settings-section-title">プロフィール</div>
@@ -445,7 +445,7 @@ select.settings-inp{cursor:pointer}
           </div>
         </div>
       </div>
- 
+
       <!-- 目標 -->
       <div class="settings-section">
         <div class="settings-section-title">学習目標</div>
@@ -466,10 +466,10 @@ select.settings-inp{cursor:pointer}
           </div>
         </div>
       </div>
- 
+
       <!-- 保存ボタン -->
       <button class="btn btn-blue" onclick="saveSettings()" style="width:100%;padding:14px;font-size:14px;margin-bottom:20px">✓ 設定を保存する</button>
- 
+
       <!-- データ管理 -->
       <div class="settings-section">
         <div class="settings-section-title">データ管理</div>
@@ -490,27 +490,27 @@ select.settings-inp{cursor:pointer}
           </div>
         </div>
       </div>
- 
+
     </div>
   </div>
- 
+
 </div><!-- /#app -->
- 
+
 <!-- ── NAV ── -->
 <div class="nav" id="nav" style="display:none">
   <div class="ni active" onclick="goSc('home',this)"><div class="ni-icon">🏠</div>ホーム</div>
   <div class="ni" onclick="goSc('stats',this);renderStats()"><div class="ni-icon">📈</div>統計</div>
   <div class="ni" onclick="goSc('settings',this);loadSettings()"><div class="ni-icon">⚙️</div>設定</div>
 </div>
- 
- 
- 
+
+
+
 <div class="toast" id="toast"></div>
- 
+
 <script>
 // ── OB STATE ──
 const ob = { name:'', avatar:'🐯', grade:'', goalMin:60 };
- 
+
 function chkName(){
   const n = document.getElementById('ob-name').value.trim();
   const g = document.getElementById('ob-grade').value;
@@ -555,7 +555,7 @@ function applyProfile(){
   document.getElementById('hdrAv3').textContent = ob.avatar;
   document.getElementById('heroName').textContent = ob.name + 'さん';
 }
- 
+
 // ── NAV ──
 function goSc(name,el){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
@@ -563,17 +563,17 @@ function goSc(name,el){
   document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));
   if(el) el.classList.add('active');
 }
- 
+
 // ── スプレッドシート送信URL ──
 // ↓ここに手順書の通りにApps ScriptのURLを貼り付けてください
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbz56XfZd1igcnP1idjs3POCjQ6VB0vsJ3QInWW30xgnWGKZLAB2zCUBnSG9-TpAE6z1/exec';
- 
+
 // ── TIMER ──
 let timerSec=0, timerRunning=false, timerInterval=null, currentSubj='算数', timerStartTime=null, timerBaseTime=0;
 let goalMin=60, totalMinToday=0;
 const logData=[];
 const subjectColors={算数:'var(--blue)',国語:'var(--yellow)',理科:'var(--green)',社会:'var(--orange,#ffa94d)',英語:'var(--purple,#b197fc)',その他:'var(--muted)'};
- 
+
 function pickS(el){
   document.querySelectorAll('.sc').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel'); currentSubj=el.dataset.s;
@@ -624,7 +624,7 @@ function stopAndSave(){
   });
   showToast(`✅ ${currentSubj} ${mins}分 を記録したよ！`);
 }
- 
+
 // スプレッドシートへ送信
 function sendToSheet(data){
   if(!GAS_URL || GAS_URL.includes('★')){ return; } // URL未設定なら何もしない
@@ -664,33 +664,33 @@ function updateGoalBar(){
   document.getElementById('gbarNote').textContent =
     rem<=0 ? '🎉 目標達成！すごい！' : `あと${rem}分がんばろう！`;
 }
- 
- 
- 
- 
- 
+
+
+
+
+
 // ── MANUAL INPUT ──
 let manualSubj = '算数';
- 
+
 function pickMS(el){
   document.querySelectorAll('.msc').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel');
   manualSubj = el.dataset.s;
 }
- 
+
 function saveManual(){
   const dateVal = document.getElementById('manualDate').value;
   const minsVal = parseInt(document.getElementById('manualMins').value);
   const memo    = document.getElementById('manualMemo').value.trim();
- 
+
   if(!dateVal){ showToast('⚠ 日付を選んでね'); return; }
   if(!minsVal || minsVal < 1){ showToast('⚠ 時間（分）を入力してね'); return; }
- 
+
   const d = new Date(dateVal);
   const hm = s=>String(s).padStart(2,'0');
   const dateStr = d.getFullYear()+'/'+hm(d.getMonth()+1)+'/'+hm(d.getDate());
   const timeRange = memo || '手動入力';
- 
+
   // 今日の分ならログにも追加
   const todayStr = (()=>{
     const n=new Date();
@@ -701,23 +701,23 @@ function saveManual(){
     totalMinToday += minsVal;
     updateStats(); renderLog(); updateGoalBar();
   }
- 
+
   // localStorageに保存
   saveLog({ subj: manualSubj, mins: minsVal, timeRange, date: dateStr });
- 
+
   // スプレッドシートに送信
   sendToSheet({
     name: ob.name, grade: ob.grade,
     date: dateStr, subject: manualSubj,
     minutes: minsVal, timeRange, goalMin: ob.goalMin,
   });
- 
+
   // リセット
   document.getElementById('manualMins').value = '';
   document.getElementById('manualMemo').value = '';
   showToast(`✅ ${manualSubj} ${minsVal}分 を記録したよ！`);
 }
- 
+
 // 日付のデフォルトを今日にする
 (function setDefaultDate(){
   const inp = document.getElementById('manualDate');
@@ -727,7 +727,7 @@ function saveManual(){
     inp.value = n.getFullYear()+'-'+hm(n.getMonth()+1)+'-'+hm(n.getDate());
   }
 })();
- 
+
 // ── ALL TIME LOG (localStorage) ──
 function saveLog(entry){
   const key = 'terakoya_log';
@@ -738,12 +738,12 @@ function saveLog(entry){
 function getAllLogs(){
   return JSON.parse(localStorage.getItem('terakoya_log')||'[]');
 }
- 
+
 // ── RENDER STATS ──
 function renderStats(){
   const logs = getAllLogs();
   const SUBJ_C2 = {算数:'#2196f3',国語:'#f59e0b',理科:'#22c55e',社会:'#f97316',英語:'#a855f7',その他:'#94a3b8'};
- 
+
   // KPI
   const totalMin = logs.reduce((a,l)=>a+l.mins,0);
   const days = new Set(logs.map(l=>l.date)).size;
@@ -752,7 +752,7 @@ function renderStats(){
   document.getElementById('statDays').textContent = days;
   document.getElementById('statAvg').innerHTML = avg + '<span style="font-size:14px">分</span>';
   document.getElementById('statSessions2').textContent = logs.length;
- 
+
   // 過去7日間バーチャート
   const today = new Date();
   const days7 = [];
@@ -773,7 +773,7 @@ function renderStats(){
       <div class="bar-box" style="height:${Math.round(d.mins/maxMin*80)}px;background:${d.isToday?'#2196f3':'#bfdbfe'}"></div>
       <div class="bar-lbl" style="color:${d.isToday?'#2196f3':'var(--muted)'};font-weight:${d.isToday?900:700}">${d.label}</div>
     </div>`).join('');
- 
+
   // 科目別累計
   const subjMap = {};
   logs.forEach(l=>{ subjMap[l.subj]=(subjMap[l.subj]||0)+l.mins; });
@@ -787,7 +787,7 @@ function renderStats(){
         <div class="subj-bar-min">${m}分</div>
       </div>`).join('')
     : '<div style="font-size:13px;color:var(--muted);font-weight:700">まだ記録がありません</div>';
- 
+
   // 履歴一覧
   const histEl = document.getElementById('histList');
   if(!logs.length){
@@ -804,7 +804,7 @@ function renderStats(){
       <div class="hist-min">${l.mins}分</div>
     </div>`).join('');
 }
- 
+
 // ── SETTINGS ──
 function loadSettings(){
   document.getElementById('set-name').value = ob.name || '';
@@ -840,7 +840,6 @@ function saveSettings(){
 }
 function clearLogs(){
   if(!confirm('学習ログを全て削除しますか？\n統計・履歴データが消えます。')) return;
-統計・履歴データが消えます。')) return;
   localStorage.removeItem('terakoya_log');
   totalMinToday = 0;
   logData.length = 0;
@@ -849,19 +848,18 @@ function clearLogs(){
 }
 function clearAll(){
   if(!confirm('全データをリセットしますか？\n登録情報・ログが全て消えて最初からやり直しになります。')) return;
-登録情報・ログが全て消えて最初からやり直しになります。')) return;
   localStorage.clear();
   showToast('リセットしました。再読み込みします...');
   setTimeout(()=>location.reload(), 1500);
 }
- 
+
 // ── TOAST ──
 function showToast(msg){
   const t=document.getElementById('toast');
   t.textContent=msg; t.classList.add('show');
   setTimeout(()=>t.classList.remove('show'),2400);
 }
- 
+
 // ── INIT ──
 (function(){
   const done=localStorage.getItem('ob');
@@ -877,4 +875,3 @@ function showToast(msg){
 </script>
 </body>
 </html>
- 
