@@ -198,6 +198,22 @@ select.settings-inp{cursor:pointer}
 .danger-row-icon{font-size:20px;width:28px;text-align:center}
 .danger-row-label{flex:1;font-size:13px;font-weight:800;color:#e11d48}
 .danger-row-sub{font-size:11px;color:#fb7185;margin-top:2px}
+
+/* ── RANKING ── */
+.ranking-page{padding:0 18px 16px}
+.ranking-week{font-size:11px;color:var(--muted);font-weight:700;margin-bottom:12px;text-align:center}
+.ranking-card{background:var(--card);border-radius:var(--r);border:1px solid #e2e8f0;overflow:hidden;margin-bottom:12px}
+.ranking-item{display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:1px solid #f1f5f9}
+.ranking-item:last-child{border-bottom:none}
+.ranking-medal{font-size:24px;width:32px;text-align:center;flex-shrink:0}
+.ranking-num{font-size:16px;font-weight:900;width:32px;text-align:center;flex-shrink:0;color:var(--muted)}
+.ranking-info{flex:1}
+.ranking-name{font-size:15px;font-weight:900}
+.ranking-grade{font-size:11px;color:var(--muted);font-weight:700}
+.ranking-msg{font-size:11px;color:var(--blue);margin-top:2px;font-weight:700}
+.ranking-min{font-size:14px;font-weight:900;color:var(--yellow);text-align:right;flex-shrink:0}
+.ranking-empty{padding:24px;text-align:center;font-size:13px;color:var(--muted);font-weight:700}
+.ranking-updated{font-size:10px;color:var(--muted);text-align:center;padding:8px;font-weight:600}
 </style>
 </head>
 <body>
@@ -494,12 +510,29 @@ select.settings-inp{cursor:pointer}
     </div>
   </div>
 
+  <!-- ── RANKING ── -->
+  <div class="screen" id="sc-ranking">
+    <div class="hdr">
+      <div class="hdr-logo">てらこや<em>こべつ</em> 🏮</div>
+      <div class="hdr-av" id="hdrAv4">🐯</div>
+    </div>
+    <div class="sec">🏆 週間ランキング</div>
+    <div class="ranking-page">
+      <div class="ranking-week" id="rankingWeek">今週のランキング</div>
+      <div class="ranking-card" id="rankingList">
+        <div class="ranking-empty">ランキングはまだありません。<br>先生からの発表をお待ちください！</div>
+      </div>
+      <div class="ranking-updated" id="rankingUpdated"></div>
+    </div>
+  </div>
+
 </div><!-- /#app -->
 
 <!-- ── NAV ── -->
 <div class="nav" id="nav" style="display:none">
   <div class="ni active" onclick="goSc('home',this)"><div class="ni-icon">🏠</div>ホーム</div>
   <div class="ni" onclick="goSc('stats',this);renderStats()"><div class="ni-icon">📈</div>統計</div>
+  <div class="ni" onclick="goSc('ranking',this);renderRanking()"><div class="ni-icon">🏆</div>ランキング</div>
   <div class="ni" onclick="goSc('settings',this);loadSettings()"><div class="ni-icon">⚙️</div>設定</div>
 </div>
 
@@ -553,6 +586,7 @@ function applyProfile(){
   document.getElementById('hdrAv').textContent = ob.avatar;
   document.getElementById('hdrAv2').textContent = ob.avatar;
   document.getElementById('hdrAv3').textContent = ob.avatar;
+  document.getElementById('hdrAv4').textContent = ob.avatar;
   document.getElementById('heroName').textContent = ob.name + 'さん';
 }
 
@@ -851,6 +885,43 @@ function clearAll(){
   localStorage.clear();
   showToast('リセットしました。再読み込みします...');
   setTimeout(()=>location.reload(), 1500);
+}
+
+// ── RANKING ──
+// ランキングデータの構造:
+// { week: '2025/05/05〜05/11', updatedAt: '2025/05/12', items: [
+//   { rank:1, name:'たろう', grade:'小5', mins:240, msg:'すごい！' },
+// ]}
+
+function renderRanking(){
+  const data = JSON.parse(localStorage.getItem('terakoya_ranking')||'null');
+  const list = document.getElementById('rankingList');
+  const weekEl = document.getElementById('rankingWeek');
+  const updEl = document.getElementById('rankingUpdated');
+
+  if(!data || !data.items || !data.items.length){
+    list.innerHTML = '<div class="ranking-empty">ランキングはまだありません。<br>先生からの発表をお待ちください！</div>';
+    weekEl.textContent = '今週のランキング';
+    updEl.textContent = '';
+    return;
+  }
+
+  weekEl.textContent = data.week ? data.week+'の週間ランキング' : '今週のランキング';
+  updEl.textContent = data.updatedAt ? '更新日：'+data.updatedAt : '';
+
+  const medals = ['🥇','🥈','🥉'];
+  list.innerHTML = data.items.map((item,i)=>`
+    <div class="ranking-item">
+      ${i<3
+        ? `<div class="ranking-medal">${medals[i]}</div>`
+        : `<div class="ranking-num">${item.rank}</div>`}
+      <div class="ranking-info">
+        <div class="ranking-name">${item.name}</div>
+        <div class="ranking-grade">${item.grade}</div>
+        ${item.msg ? `<div class="ranking-msg">💬 ${item.msg}</div>` : ''}
+      </div>
+      <div class="ranking-min">${item.mins}分</div>
+    </div>`).join('');
 }
 
 // ── TOAST ──
