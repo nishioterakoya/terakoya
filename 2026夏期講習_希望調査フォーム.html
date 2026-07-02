@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 中３夏期講習 希望調査</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ocean: #1a6fa3;
+    --ocean-dark: #0f4870;
+    --ocean-light: #d6eaf8;
+    --sand: #fdf6ec;
+    --sand-dark: #f0e4cc;
+    --accent: #e8a020;
+    --green: #2e7d4f;
+    --green-light: #e8f5ee;
+    --red-light: #fdecea;
+    --text: #1a1a2e;
+    --muted: #6b7280;
+    --border: #d1dce8;
+  }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: linear-gradient(160deg, #e8f4fd 0%, #fdf6ec 60%);
+    min-height: 100vh;
+    color: var(--text);
+    padding: 24px 16px 60px;
+  }
+
+  .page {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  /* Header */
+  .header {
+    background: var(--ocean-dark);
+    border-radius: 16px 16px 0 0;
+    padding: 28px 32px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; left: 0; right: 0;
+    height: 24px;
+    background: var(--sand);
+    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  }
+  .header-wave {
+    position: absolute;
+    top: 0; right: -20px;
+    width: 200px; height: 100%;
+    opacity: 0.07;
+    background: radial-gradient(ellipse at 70% 50%, #fff 0%, transparent 70%);
+  }
+  .header-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .header h1 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.3;
+  }
+  .header-sub {
+    margin-top: 8px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.6;
+  }
+
+  /* Body card */
+  .card {
+    background: var(--sand);
+    padding: 28px 32px;
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+  }
+  .card-last {
+    border-radius: 0 0 16px 16px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 36px;
+  }
+
+  /* Section label */
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--ocean);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* Input fields */
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .field label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted);
+  }
+  .field input, .field textarea, .field select {
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--text);
+    background: #fff;
+    transition: border-color 0.2s;
+    width: 100%;
+  }
+  .field input:focus, .field textarea:focus {
+    outline: none;
+    border-color: var(--ocean);
+  }
+  .field textarea { resize: vertical; min-height: 70px; }
+  .field-full { grid-column: 1 / -1; }
+
+  /* Subject grid */
+  .subject-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .subj-btn {
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 4px;
+    background: #fff;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--muted);
+    text-align: center;
+    transition: all 0.15s;
+    user-select: none;
+  }
+  .subj-btn:hover { border-color: var(--ocean); color: var(--ocean); }
+  .subj-btn.selected-weak {
+    background: var(--red-light);
+    border-color: #e05252;
+    color: #c0392b;
+  }
+  .subj-btn.selected-focus {
+    background: var(--green-light);
+    border-color: var(--green);
+    color: var(--green);
+  }
+  .legend {
+    display: flex;
+    gap: 16px;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+  .legend span { display: flex; align-items: center; gap: 4px; }
+  .dot { width: 10px; height: 10px; border-radius: 3px; }
+  .dot-weak { background: #e05252; }
+  .dot-focus { background: var(--green); }
+
+  /* Focus count input */
+  .focus-counts {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .focus-count-item {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+  .focus-count-item.visible { display: flex; }
+  .focus-count-item label { font-size: 11px; color: var(--muted); font-weight: 700; }
+  .focus-count-item input {
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 6px;
+    font-family: inherit;
+    font-size: 13px;
+    text-align: center;
+    width: 100%;
+    background: var(--green-light);
+    color: var(--green);
+    font-weight: 700;
+  }
+
+  /* Divider */
+  .divider { height: 1px; background: var(--border); margin: 24px 0; }
+
+  /* Schedule table */
+  .month-header {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ocean-dark);
+    background: var(--ocean-light);
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin: 16px 0 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .month-header.yobi {
+    background: #fef9e7;
+    color: #856404;
+  }
+
+  .slot-header {
+    display: grid;
+    grid-template-columns: 70px 32px 1fr 1fr 1fr;
+    gap: 6px;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--muted);
+    text-align: center;
+    padding: 0 4px;
+    margin-bottom: 4px;
+  }
+
+  .date-row {
+    display: grid;
+    grid-template-columns: 70px 32px 1fr 1fr 1fr;
+    gap: 6px;
+    align-items: center;
+    padding: 4px;
+    border-radius: 6px;
+    transition: background 0.1s;
+  }
+  .date-row:hover { background: rgba(26,111,163,0.04); }
+  .date-row.yobi-row { background: #fffdf0; }
+  .date-row.yobi-row:hover { background: #fef9e7; }
+
+  .date-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+  }
+  .day-label {
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+    color: var(--muted);
+  }
+
+  .slot-cell {
+    display: flex;
+    justify-content: center;
+  }
+  .slot-check {
+    width: 36px;
+    height: 36px;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    background: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    transition: all 0.15s;
+    user-select: none;
+    color: transparent;
+  }
+  .slot-check:hover { border-color: var(--ocean); }
+  .slot-check.checked {
+    background: var(--ocean);
+    border-color: var(--ocean);
+    color: #fff;
+  }
+  .slot-check.checked-yobi {
+    background: #e8a020;
+    border-color: #e8a020;
+    color: #fff;
+  }
+
+  /* Counter bar */
+  .counter-bar {
+    position: sticky;
+    bottom: 16px;
+    margin-top: 24px;
+    background: var(--ocean-dark);
+    border-radius: 12px;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 4px 20px rgba(15,72,112,0.3);
+    z-index: 10;
+  }
+  .counter-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+  .counter-num {
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1;
+  }
+  .counter-num.ok { color: var(--accent); }
+  .counter-label {
+    font-size: 10px;
+    color: rgba(255,255,255,0.6);
+    white-space: nowrap;
+  }
+  .counter-sep { width: 1px; height: 36px; background: rgba(255,255,255,0.15); }
+  .counter-bar .target {
+    font-size: 10px;
+    color: rgba(255,255,255,0.5);
+    margin-left: auto;
+    line-height: 1.5;
+    text-align: right;
+  }
+
+  /* Buttons */
+  .btn-submit {
+    display: block;
+    width: 100%;
+    margin-top: 16px;
+    padding: 16px;
+    background: var(--green);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-submit:hover { background: #1f5c39; }
+  .btn-submit:disabled { background: var(--muted); cursor: not-allowed; }
+
+  .btn-print {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    padding: 13px;
+    background: transparent;
+    color: var(--ocean);
+    border: 2px solid var(--ocean);
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-print:hover { background: var(--ocean); color: #fff; }
+
+  /* Toast */
+  .toast {
+    display: none;
+    position: fixed;
+    bottom: 90px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--green);
+    color: #fff;
+    padding: 14px 28px;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 700;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    z-index: 100;
+    white-space: nowrap;
+  }
+  .toast.error { background: #c0392b; }
+  .toast.show { display: block; animation: fadeInOut 3s ease forwards; }
+  @keyframes fadeInOut {
+    0% { opacity: 0; transform: translateX(-50%) translateY(10px); }
+    15% { opacity: 1; transform: translateX(-50%) translateY(0); }
+    75% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+
+  /* Print styles */
+  @media print {
+    body { background: #fff; padding: 0; }
+    .counter-bar, .btn-print, .btn-submit, .toast { display: none; }
+    .card { border: none; padding: 16px; }
+    .header { border-radius: 0; }
+    .slot-check { border-color: #999; }
+    .slot-check.checked::after { content: '○'; color: #000; }
+    .slot-check.checked { background: none; color: #000; }
+  }
+
+  @media (max-width: 500px) {
+    .field-row { grid-template-columns: 1fr; }
+    .subject-grid { grid-template-columns: repeat(5,1fr); gap:5px; }
+    .subj-btn { font-size: 12px; padding: 8px 2px; }
+    .slot-header, .date-row { grid-template-columns: 58px 26px 1fr 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="header-wave"></div>
+    <div class="header-eyebrow">西尾寺子屋個別塾</div>
+    <h1>2026 中３夏期講習<br>日程・希望調査</h1>
+    <div class="header-sub">
+      個別授業20回・演習20回のコマを選んでください。<br>
+      教科は自由に組み合わせられます。
+    </div>
+  </div>
+
+  <div class="card">
+    <!-- 基本情報 -->
+    <div class="section-label">基本情報</div>
+    <div class="field-row">
+      <div class="field">
+        <label>氏名</label>
+        <input type="text" placeholder="山田 太郎" id="name">
+      </div>
+      <div class="field">
+        <label>志望校</label>
+        <input type="text" placeholder="○○高校" id="school">
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- 教科 -->
+    <div class="section-label">教科について</div>
+
+    <p style="font-size:12px;color:var(--muted);margin-bottom:10px;">苦手な教科と重点的に学びたい教科をそれぞれ選んでください（複数選択可）</p>
+
+    <div style="margin-bottom:6px;font-size:12px;font-weight:700;color:var(--muted);">苦手な教科</div>
+    <div class="subject-grid" id="weakGrid">
+      <button class="subj-btn" data-subj="国語" data-type="weak" onclick="toggleSubject(this)">国語</button>
+      <button class="subj-btn" data-subj="数学" data-type="weak" onclick="toggleSubject(this)">数学</button>
+      <button class="subj-btn" data-subj="英語" data-type="weak" onclick="toggleSubject(this)">英語</button>
+      <button class="subj-btn" data-subj="理科" data-type="weak" onclick="toggleSubject(this)">理科</button>
+      <button class="subj-btn" data-subj="社会" data-type="weak" onclick="toggleSubject(this)">社会</button>
+    </div>
+
+    <div style="margin:14px 0 6px;font-size:12px;font-weight:700;color:var(--muted);">重点的に学びたい教科と希望回数の目安</div>
+    <div class="subject-grid" id="focusGrid">
+      <button class="subj-btn" data-subj="国語" data-type="focus" onclick="toggleSubject(this)">国語</button>
+      <button class="subj-btn" data-subj="数学" data-type="focus" onclick="toggleSubject(this)">数学</button>
+      <button class="subj-btn" data-subj="英語" data-type="focus" onclick="toggleSubject(this)">英語</button>
+      <button class="subj-btn" data-subj="理科" data-type="focus" onclick="toggleSubject(this)">理科</button>
+      <button class="subj-btn" data-subj="社会" data-type="focus" onclick="toggleSubject(this)">社会</button>
+    </div>
+    <div class="focus-counts" id="focusCounts">
+      <div class="focus-count-item" id="count-国語"><label>国語</label><input type="number" min="0" max="20" placeholder="回" title="国語の希望回数"></div>
+      <div class="focus-count-item" id="count-数学"><label>数学</label><input type="number" min="0" max="20" placeholder="回" title="数学の希望回数"></div>
+      <div class="focus-count-item" id="count-英語"><label>英語</label><input type="number" min="0" max="20" placeholder="回" title="英語の希望回数"></div>
+      <div class="focus-count-item" id="count-理科"><label>理科</label><input type="number" min="0" max="20" placeholder="回" title="理科の希望回数"></div>
+      <div class="focus-count-item" id="count-社会"><label>社会</label><input type="number" min="0" max="20" placeholder="回" title="社会の希望回数"></div>
+    </div>
+
+    <div class="legend" style="margin-top:10px;">
+      <span><span class="dot dot-weak"></span>苦手</span>
+      <span><span class="dot dot-focus"></span>重点・希望回数</span>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Schedule -->
+    <div class="section-label">日程選択</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:4px;">希望するコマをタップ／クリックしてください（個別①②③から20回、演習から20回が目標です）</p>
+
+    <div class="slot-header">
+      <div></div><div></div>
+      <div>12:00〜13:50<br>個別①</div>
+      <div>14:00〜15:50<br>個別②</div>
+      <div>16:00〜17:50<br>個別③</div>
+    </div>
+
+    <div id="scheduleMain"></div>
+
+    <div class="month-header yobi">📅 予備日（8/25〜28）― 振替・追加受講用</div>
+    <div class="slot-header">
+      <div></div><div></div>
+      <div>12:00〜13:50<br>個別①</div>
+      <div>14:00〜15:50<br>個別②</div>
+      <div>16:00〜17:50<br>個別③</div>
+    </div>
+    <div id="scheduleYobi"></div>
+
+    <div class="divider"></div>
+
+    <!-- 備考 -->
+    <div class="section-label">備考・要望</div>
+    <div class="field">
+      <label>自由記入（欠席予定・その他ご要望など）</label>
+      <textarea id="memo" placeholder="例：8/5は体験入学があるため午後から参加希望　など"></textarea>
+    </div>
+
+    <!-- Counter -->
+    <div class="counter-bar">
+      <div class="counter-item">
+        <div class="counter-num" id="cnt-ind">0</div>
+        <div class="counter-label">個別回数</div>
+      </div>
+      <div class="counter-sep"></div>
+      <div class="counter-item">
+        <div class="counter-num" id="cnt-ens">0</div>
+        <div class="counter-label">演習回数</div>
+      </div>
+      <div class="target">目標：個別 20回<br>演習 20回</div>
+    </div>
+
+    <button class="btn-submit" id="btnSubmit" onclick="submitForm()">📨 スプレッドシートに送信する</button>
+    <button class="btn-print" onclick="window.print()">🖨️ この内容を印刷する</button>
+  </div>
+
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbyD4bgfr4yRWGAtgGXRDly2R_bF-90wSyrA-GnCjwqZQcAcNFvEeLQiQq6x_rtq2cNS/exec';
+const SUBJECTS = ['国語','数学','英語','理科','社会'];
+
+const mainDates = [
+  {date:"7/20",day:"月",month:7},{date:"7/21",day:"火",month:7},{date:"7/22",day:"水",month:7},{date:"7/23",day:"木",month:7},{date:"7/24",day:"金",month:7},
+  {date:"7/27",day:"月",month:7},{date:"7/28",day:"火",month:7},{date:"7/29",day:"水",month:7},{date:"7/30",day:"木",month:7},{date:"7/31",day:"金",month:7},
+  {date:"8/3",day:"月",month:8},{date:"8/4",day:"火",month:8},{date:"8/5",day:"水",month:8},{date:"8/6",day:"木",month:8},{date:"8/7",day:"金",month:8},
+  {date:"8/17",day:"月",month:8},{date:"8/18",day:"火",month:8},{date:"8/19",day:"水",month:8},{date:"8/20",day:"木",month:8},{date:"8/21",day:"金",month:8}
+];
+const yobiDates = [
+  {date:"8/25",day:"火",month:8},{date:"8/26",day:"水",month:8},{date:"8/27",day:"木",month:8},{date:"8/28",day:"金",month:8}
+];
+
+const slots = ['ind1','ind2','ind3'];
+let state = {}; // key: "date-slot" => bool
+
+function buildSchedule(dates, containerId, isYobi) {
+  const container = document.getElementById(containerId);
+  let currentMonth = null;
+  dates.forEach(d => {
+    if (!isYobi && d.month !== currentMonth) {
+      const mh = document.createElement('div');
+      mh.className = 'month-header';
+      mh.textContent = d.month + '月';
+      container.appendChild(mh);
+      // re-add slot header
+      const sh = document.createElement('div');
+      sh.className = 'slot-header';
+      sh.innerHTML = '<div></div><div></div><div>12:00〜13:50<br>個別①</div><div>14:00〜15:50<br>個別②</div><div>16:00〜17:50<br>個別③</div>';
+      container.appendChild(sh);
+      currentMonth = d.month;
+    }
+    const row = document.createElement('div');
+    row.className = 'date-row' + (isYobi ? ' yobi-row' : '');
+
+    const dateEl = document.createElement('div');
+    dateEl.className = 'date-label';
+    dateEl.textContent = d.date + '（' + d.day + '）';
+    row.appendChild(dateEl);
+
+    const dayEl = document.createElement('div');
+    dayEl.className = 'day-label';
+    row.appendChild(dayEl);
+
+    slots.forEach((slot, i) => {
+      const key = d.date + '-' + slot;
+      state[key] = false;
+      const cell = document.createElement('div');
+      cell.className = 'slot-cell';
+      const btn = document.createElement('div');
+      btn.className = 'slot-check';
+      btn.textContent = '○';
+      btn.dataset.key = key;
+      btn.dataset.type = slot;
+      btn.dataset.yobi = isYobi ? '1' : '0';
+      btn.addEventListener('click', () => toggleSlot(btn));
+      cell.appendChild(btn);
+      row.appendChild(cell);
+    });
+
+    container.appendChild(row);
+  });
+}
+
+function toggleSlot(btn) {
+  const key = btn.dataset.key;
+  state[key] = !state[key];
+  const isYobi = btn.dataset.yobi === '1';
+  if (state[key]) {
+    btn.classList.add(isYobi ? 'checked-yobi' : 'checked');
+  } else {
+    btn.classList.remove('checked', 'checked-yobi');
+  }
+  updateCounters();
+}
+
+function updateCounters() {
+  let ind = 0, ens = 0;
+  Object.entries(state).forEach(([key, val]) => {
+    if (!val) return;
+    if (key.includes('-ind')) ind++;
+  });
+  // Note: no ens slots in this version (individual only, ens removed per spec)
+  // Actually we have 3 individual slots total - count all checked
+  const indEl = document.getElementById('cnt-ind');
+  indEl.textContent = ind;
+  indEl.className = 'counter-num' + (ind >= 20 ? ' ok' : '');
+}
+
+function toggleSubject(btn) {
+  const type = btn.dataset.type;
+  const subj = btn.dataset.subj;
+  const cls = type === 'weak' ? 'selected-weak' : 'selected-focus';
+  btn.classList.toggle(cls);
+  if (type === 'focus') {
+    const countEl = document.getElementById('count-' + subj);
+    if (btn.classList.contains('selected-focus')) {
+      countEl.classList.add('visible');
+    } else {
+      countEl.classList.remove('visible');
+      countEl.querySelector('input').value = '';
+    }
+  }
+}
+
+function showToast(msg, isError = false) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast' + (isError ? ' error' : '') + ' show';
+  setTimeout(() => { t.className = 'toast'; }, 3200);
+}
+
+async function submitForm() {
+  const name = document.getElementById('name').value.trim();
+  if (!name) { showToast('⚠️ 氏名を入力してください', true); return; }
+
+  const weakSubjects = [...document.querySelectorAll('#weakGrid .selected-weak')].map(b => b.dataset.subj);
+  const focusSubjects = [...document.querySelectorAll('#focusGrid .selected-focus')].map(b => {
+    const countEl = document.getElementById('count-' + b.dataset.subj);
+    const count = countEl ? countEl.querySelector('input').value : '';
+    return { subj: b.dataset.subj, count };
+  });
+
+  const btn = document.getElementById('btnSubmit');
+  btn.disabled = true;
+  btn.textContent = '送信中…';
+
+  const payload = {
+    name,
+    school: document.getElementById('school').value.trim(),
+    weakSubjects,
+    focusSubjects,
+    memo: document.getElementById('memo').value.trim(),
+    schedule: state
+  };
+
+  try {
+    await fetch(GAS_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    showToast('✅ 送信完了しました！');
+    btn.textContent = '✅ 送信済み';
+  } catch (err) {
+    showToast('❌ 送信に失敗しました。もう一度お試しください', true);
+    btn.disabled = false;
+    btn.textContent = '📨 スプレッドシートに送信する';
+  }
+}
+
+buildSchedule(mainDates, 'scheduleMain', false);
+buildSchedule(yobiDates, 'scheduleYobi', true);
+</script>
+</body>
+</html>
