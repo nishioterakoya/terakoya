@@ -542,7 +542,7 @@
       <div class="target">目標：個別 20回<br>演習 20回</div>
     </div>
 
-    <button class="btn-submit" id="btnSubmit" onclick="submitForm()">📨 スプレッドシートに送信する</button>
+    <button class="btn-submit" id="btnSubmit" onclick="submitForm()">📨 送信する</button>
     <button class="btn-print" onclick="window.print()">🖨️ この内容を印刷する</button>
   </div>
 
@@ -698,7 +698,7 @@ async function submitForm() {
   } catch (err) {
     showToast('❌ 送信に失敗しました。もう一度お試しください', true);
     btn.disabled = false;
-    btn.textContent = '📨 スプレッドシートに送信する';
+    btn.textContent = '📨 送信する';
   }
 }
 
