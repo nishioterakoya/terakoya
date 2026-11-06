@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 中３冬季講習 希望調査</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #16365c;
+    --navy-dark: #0e2640;
+    --blue: #2f6fb0;
+    --ice: #e3eef9;
+    --frost: #f6f9fd;
+    --gold: #d9a441;
+    --green: #2e7d4f;
+    --green-light: #e8f5ee;
+    --red: #c0392b;
+    --red-light: #fdecea;
+    --text: #1a1a2e;
+    --muted: #6b7280;
+    --border: #cfdbe9;
+  }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: linear-gradient(170deg, #e4eefa 0%, #f8fbfe 55%);
+    min-height: 100vh;
+    color: var(--text);
+    padding: 24px 16px 60px;
+  }
+
+  .page { max-width: 760px; margin: 0 auto; }
+
+  /* Header */
+  .header {
+    background:
+      radial-gradient(circle at 12% 28%, rgba(255,255,255,.22) 0 2px, transparent 3px),
+      radial-gradient(circle at 28% 70%, rgba(255,255,255,.16) 0 1.5px, transparent 2.5px),
+      radial-gradient(circle at 52% 22%, rgba(255,255,255,.2) 0 2px, transparent 3px),
+      radial-gradient(circle at 74% 62%, rgba(255,255,255,.18) 0 2.5px, transparent 3.5px),
+      radial-gradient(circle at 90% 25%, rgba(255,255,255,.22) 0 1.5px, transparent 2.5px),
+      linear-gradient(135deg, var(--navy-dark), var(--navy));
+    border-radius: 16px 16px 0 0;
+    padding: 28px 32px 36px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; left: 0; right: 0;
+    height: 22px;
+    background: var(--frost);
+    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  }
+  .header-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+  .header h1 { font-size: 24px; font-weight: 700; color: #fff; line-height: 1.35; }
+  .header-sub { margin-top: 10px; font-size: 13px; color: rgba(255,255,255,.78); line-height: 1.7; }
+
+  /* Card */
+  .card {
+    background: var(--frost);
+    padding: 24px 32px 32px;
+    border: 1px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 16px 16px;
+  }
+
+  /* Info box */
+  .info {
+    background: #fff;
+    border: 1.5px solid var(--border);
+    border-left: 5px solid var(--gold);
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 13px;
+    line-height: 1.9;
+    margin-bottom: 8px;
+  }
+  .info b { color: var(--navy); }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--blue);
+    margin: 4px 0 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field label { font-size: 12px; font-weight: 700; color: var(--muted); }
+  .field input, .field textarea {
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--text);
+    background: #fff;
+    transition: border-color .2s;
+    width: 100%;
+  }
+  .field input:focus, .field textarea:focus { outline: none; border-color: var(--blue); }
+  .field textarea { resize: vertical; min-height: 70px; }
+
+  /* Subjects */
+  .subject-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 8px; }
+  .subj-btn {
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 4px;
+    background: #fff;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--muted);
+    text-align: center;
+    transition: all .15s;
+    user-select: none;
+  }
+  .subj-btn:hover { border-color: var(--blue); color: var(--blue); }
+  .subj-btn.selected-weak { background: var(--red-light); border-color: #e05252; color: var(--red); }
+  .subj-btn.selected-focus { background: var(--green-light); border-color: var(--green); color: var(--green); }
+  .legend { display: flex; gap: 16px; font-size: 11px; color: var(--muted); margin-top: 10px; }
+  .legend span { display: flex; align-items: center; gap: 4px; }
+  .dot { width: 10px; height: 10px; border-radius: 3px; }
+  .dot-weak { background: #e05252; }
+  .dot-focus { background: var(--green); }
+
+  .focus-counts { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-top: 10px; }
+  .focus-count-item { display: none; flex-direction: column; align-items: center; gap: 4px; }
+  .focus-count-item.visible { display: flex; }
+  .focus-count-item label { font-size: 11px; color: var(--muted); font-weight: 700; }
+  .focus-count-item input {
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 6px;
+    font-family: inherit;
+    font-size: 13px;
+    text-align: center;
+    width: 100%;
+    background: var(--green-light);
+    color: var(--green);
+    font-weight: 700;
+  }
+
+  .divider { height: 1px; background: var(--border); margin: 24px 0; }
+
+  /* Schedule */
+  .slot-header, .date-row {
+    display: grid;
+    grid-template-columns: 62px 48px 1fr 1fr 1fr;
+    gap: 6px;
+    align-items: center;
+  }
+  .slot-header {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--muted);
+    text-align: center;
+    padding: 0 4px;
+    margin: 6px 0 4px;
+    line-height: 1.5;
+  }
+  .slot-header b { color: var(--navy); font-size: 12px; }
+  .month-header {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--navy-dark);
+    background: var(--ice);
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin: 14px 0 6px;
+  }
+  .date-row { padding: 4px; border-radius: 6px; }
+  .date-row:hover { background: rgba(47,111,176,.05); }
+  .date-label { font-size: 14px; font-weight: 700; }
+  .day-label { font-size: 12px; font-weight: 700; color: var(--muted); }
+  .day-red { color: var(--red); }
+  .day-blue { color: var(--blue); }
+
+  .slot-cell { display: flex; justify-content: center; }
+  .slot-check {
+    width: 40px; height: 40px;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    background: #fff;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    transition: all .15s;
+    user-select: none;
+    color: transparent;
+  }
+  .slot-check:hover { border-color: var(--blue); }
+  .slot-check.checked { background: var(--blue); border-color: var(--blue); color: #fff; }
+  .slot-na {
+    width: 40px; height: 40px;
+    border-radius: 8px;
+    background: #e5e7eb;
+    color: #9ca3af;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+  }
+  .note { font-size: 11px; color: var(--muted); margin-top: 10px; }
+
+  /* Counter */
+  .counter-bar {
+    position: sticky;
+    bottom: 16px;
+    margin-top: 24px;
+    background: var(--navy-dark);
+    border-radius: 12px;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 4px 20px rgba(14,38,64,.3);
+    z-index: 10;
+  }
+  .counter-item { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+  .counter-num { font-size: 22px; font-weight: 700; color: #fff; line-height: 1; }
+  .counter-num.ok { color: var(--gold); }
+  .counter-num.over { color: #ff8a80; }
+  .counter-label { font-size: 10px; color: rgba(255,255,255,.6); white-space: nowrap; }
+  .counter-sep { width: 1px; height: 36px; background: rgba(255,255,255,.15); }
+  .counter-bar .target { font-size: 10px; color: rgba(255,255,255,.5); margin-left: auto; line-height: 1.5; text-align: right; }
+
+  /* Buttons */
+  .btn-submit {
+    display: block; width: 100%;
+    margin-top: 16px; padding: 16px;
+    background: var(--green); color: #fff;
+    border: none; border-radius: 10px;
+    font-family: inherit; font-size: 16px; font-weight: 700;
+    cursor: pointer; transition: background .2s;
+  }
+  .btn-submit:hover { background: #1f5c39; }
+  .btn-submit:disabled { background: var(--muted); cursor: not-allowed; }
+  .btn-print {
+    display: block; width: 100%;
+    margin-top: 10px; padding: 13px;
+    background: transparent; color: var(--blue);
+    border: 2px solid var(--blue); border-radius: 10px;
+    font-family: inherit; font-size: 14px; font-weight: 700;
+    cursor: pointer; transition: all .2s;
+  }
+  .btn-print:hover { background: var(--blue); color: #fff; }
+
+  .toast {
+    display: none;
+    position: fixed; bottom: 90px; left: 50%;
+    transform: translateX(-50%);
+    background: var(--green); color: #fff;
+    padding: 14px 28px; border-radius: 50px;
+    font-size: 14px; font-weight: 700;
+    box-shadow: 0 4px 20px rgba(0,0,0,.2);
+    z-index: 100;
+    max-width: 92vw;
+    text-align: center;
+  }
+  .toast.error { background: var(--red); }
+  .toast.show { display: block; animation: fadeInOut 3.4s ease forwards; }
+  @keyframes fadeInOut {
+    0% { opacity: 0; transform: translateX(-50%) translateY(10px); }
+    12% { opacity: 1; transform: translateX(-50%) translateY(0); }
+    80% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+
+  @media print {
+    body { background: #fff; padding: 0; }
+    .counter-bar, .btn-print, .btn-submit, .toast { display: none; }
+    .card { border: none; padding: 16px; }
+    .header { border-radius: 0; }
+    .slot-check { border-color: #999; }
+    .slot-check.checked { background: none; color: #000; border-color: #000; }
+  }
+
+  @media (max-width: 500px) {
+    .header { padding: 24px 20px 34px; }
+    .card { padding: 20px 16px 28px; }
+    .field-row { grid-template-columns: 1fr; }
+    .subject-grid { gap: 5px; }
+    .subj-btn { font-size: 12px; padding: 8px 2px; }
+    .slot-header, .date-row { grid-template-columns: 50px 40px 1fr 1fr 1fr; gap: 4px; }
+    .slot-check, .slot-na { width: 36px; height: 36px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="header-eyebrow">西尾寺子屋個別塾</div>
+    <h1>2026 中３冬季講習<br>日程・希望調査</h1>
+    <div class="header-sub">
+      入試対策の個別授業です。ご希望のコマを選んでください。<br>
+      教科の配分はお子様の目標に合わせて自由に組めます。
+    </div>
+  </div>
+
+  <div class="card">
+
+    <div class="info">
+      <b>日程</b>　12/24（木）〜12/28（月）、1/5（火）・1/6（水）・1/11（月・祝）の8日間<br>
+      <b>時間</b>　①10:00〜12:00　②13:00〜15:00　③15:00〜17:00（1/11は③なし）<br>
+      <b>内容</b>　入試対策個別授業（各コマ2時間）<br>
+      <b>回数</b>　合計8回
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section-label">基本情報</div>
+    <div class="field-row">
+      <div class="field">
+        <label>氏名</label>
+        <input type="text" placeholder="山田 太郎" id="name">
+      </div>
+      <div class="field">
+        <label>志望校</label>
+        <input type="text" placeholder="○○高校" id="school">
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section-label">教科について</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:10px;">苦手な教科と重点的に学びたい教科をそれぞれ選んでください（複数選択可）</p>
+
+    <div style="margin-bottom:6px;font-size:12px;font-weight:700;color:var(--muted);">苦手な教科</div>
+    <div class="subject-grid" id="weakGrid"></div>
+
+    <div style="margin:14px 0 6px;font-size:12px;font-weight:700;color:var(--muted);">重点的に学びたい教科と希望回数の目安</div>
+    <div class="subject-grid" id="focusGrid"></div>
+    <div class="focus-counts" id="focusCounts"></div>
+
+    <div class="legend">
+      <span><span class="dot dot-weak"></span>苦手</span>
+      <span><span class="dot dot-focus"></span>重点・希望回数</span>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section-label">日程選択</div>
+    <p style="font-size:12px;color:var(--muted);">希望するコマをタップ／クリックしてください（合計8回になるように選んでください）</p>
+
+    <div class="slot-header">
+      <div></div><div></div>
+      <div><b>①</b><br>10:00〜12:00</div>
+      <div><b>②</b><br>13:00〜15:00</div>
+      <div><b>③</b><br>15:00〜17:00</div>
+    </div>
+    <div id="schedule"></div>
+    <div class="note">※1/11（月・祝）は③のコマはありません</div>
+
+    <div class="divider"></div>
+
+    <div class="section-label">備考・要望</div>
+    <div class="field">
+      <label>自由記入（欠席予定・その他ご要望など）</label>
+      <textarea id="memo" placeholder="例：12/26は午前のみ参加希望　など"></textarea>
+    </div>
+
+    <div class="counter-bar">
+      <div class="counter-item">
+        <div class="counter-num" id="cnt-slots">0</div>
+        <div class="counter-label">選択コマ数（目標8回）</div>
+      </div>
+      <div class="counter-sep"></div>
+      <div class="counter-item">
+        <div class="counter-num" id="cnt-days">0</div>
+        <div class="counter-label">受講日数</div>
+      </div>
+      <div class="target" id="targetText"></div>
+    </div>
+
+    <button class="btn-submit" id="btnSubmit" onclick="submitForm()">📨 この内容で送信する</button>
+    <button class="btn-print" onclick="window.print()">🖨️ この内容を印刷する</button>
+  </div>
+
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbwUEUj2_aUePFII833d8VDYX2vu1qfGx8J-iq2SLzBLJagVKGZFfhRN7eZ81I7o0LwkEw/exec';
+
+const SUBJECTS = ['国語', '数学', '英語', '理科', '社会'];
+const SLOTS = ['ind1', 'ind2', 'ind3'];
+const TARGET = 8;   // 冬季講習は合計8回
+
+const DATES = [
+  { date: '12/24', day: '木', month: '2026年12月' },
+  { date: '12/25', day: '金' },
+  { date: '12/26', day: '土' },
+  { date: '12/27', day: '日' },
+  { date: '12/28', day: '月' },
+  { date: '1/5',   day: '火', month: '2027年1月' },
+  { date: '1/6',   day: '水' },
+  { date: '1/11',  day: '月・祝', noSlots: ['ind3'] }
+];
+
+const state = {}; // "12/24-ind1" => true/false
+
+// ── 教科ボタン ──
+function buildSubjects() {
+  const weak = document.getElementById('weakGrid');
+  const focus = document.getElementById('focusGrid');
+  const counts = document.getElementById('focusCounts');
+  SUBJECTS.forEach(s => {
+    [['weak', weak], ['focus', focus]].forEach(([type, grid]) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'subj-btn';
+      b.dataset.subj = s;
+      b.dataset.type = type;
+      b.textContent = s;
+      b.addEventListener('click', () => toggleSubject(b));
+      grid.appendChild(b);
+    });
+    const item = document.createElement('div');
+    item.className = 'focus-count-item';
+    item.id = 'count-' + s;
+    item.innerHTML = '<label>' + s + '</label><input type="number" min="0" max="8" placeholder="回" title="' + s + 'の希望回数">';
+    counts.appendChild(item);
+  });
+}
+
+function toggleSubject(btn) {
+  const type = btn.dataset.type;
+  const subj = btn.dataset.subj;
+  btn.classList.toggle(type === 'weak' ? 'selected-weak' : 'selected-focus');
+  if (type === 'focus') {
+    const el = document.getElementById('count-' + subj);
+    if (btn.classList.contains('selected-focus')) {
+      el.classList.add('visible');
+    } else {
+      el.classList.remove('visible');
+      el.querySelector('input').value = '';
+    }
+  }
+}
+
+// ── 日程 ──
+function buildSchedule() {
+  const box = document.getElementById('schedule');
+  DATES.forEach(d => {
+    if (d.month) {
+      const mh = document.createElement('div');
+      mh.className = 'month-header';
+      mh.textContent = d.month;
+      box.appendChild(mh);
+    }
+    const row = document.createElement('div');
+    row.className = 'date-row';
+
+    const dateEl = document.createElement('div');
+    dateEl.className = 'date-label';
+    dateEl.textContent = d.date;
+    row.appendChild(dateEl);
+
+    const dayEl = document.createElement('div');
+    dayEl.className = 'day-label' + (d.day === '日' || d.day.includes('祝') ? ' day-red' : d.day === '土' ? ' day-blue' : '');
+    dayEl.textContent = d.day;
+    row.appendChild(dayEl);
+
+    SLOTS.forEach(slot => {
+      const cell = document.createElement('div');
+      cell.className = 'slot-cell';
+      if (d.noSlots && d.noSlots.includes(slot)) {
+        const na = document.createElement('div');
+        na.className = 'slot-na';
+        na.textContent = '—';
+        cell.appendChild(na);
+      } else {
+        const key = d.date + '-' + slot;
+        state[key] = false;
+        const btn = document.createElement('div');
+        btn.className = 'slot-check';
+        btn.textContent = '○';
+        btn.dataset.key = key;
+        btn.addEventListener('click', () => toggleSlot(btn));
+        cell.appendChild(btn);
+      }
+      row.appendChild(cell);
+    });
+    box.appendChild(row);
+  });
+  document.getElementById('targetText').innerHTML = '目標：合計 ' + TARGET + ' 回<br>（' + DATES.length + '日間）';
+}
+
+function toggleSlot(btn) {
+  const key = btn.dataset.key;
+  state[key] = !state[key];
+  btn.classList.toggle('checked', state[key]);
+  updateCounters();
+}
+
+function updateCounters() {
+  let slots = 0;
+  const days = new Set();
+  Object.entries(state).forEach(([key, on]) => {
+    if (!on) return;
+    slots++;
+    days.add(key.split('-')[0]);
+  });
+  const cnt = document.getElementById('cnt-slots');
+  cnt.textContent = slots;
+  cnt.className = 'counter-num' + (slots === TARGET ? ' ok' : slots > TARGET ? ' over' : '');
+  document.getElementById('cnt-days').textContent = days.size;
+}
+
+// ── 送信 ──
+function showToast(msg, isError) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast' + (isError ? ' error' : '') + ' show';
+  setTimeout(() => { t.className = 'toast'; }, 3600);
+}
+
+async function submitForm() {
+  if (GAS_URL.indexOf('script.google.com') === -1) {
+    showToast('⚠️ 送信先のURLが未設定です（GAS_URLを貼り付けてください）', true);
+    return;
+  }
+  const name = document.getElementById('name').value.trim();
+  if (!name) { showToast('⚠️ 氏名を入力してください', true); return; }
+  if (!Object.values(state).some(Boolean)) { showToast('⚠️ 希望するコマを1つ以上選んでください', true); return; }
+
+  const picked = Object.values(state).filter(Boolean).length;
+  if (picked !== TARGET && !confirm('選択したコマは' + picked + '回です（冬季講習は合計' + TARGET + '回）。このまま送信しますか？')) return;
+
+  const weakSubjects = [...document.querySelectorAll('#weakGrid .selected-weak')].map(b => b.dataset.subj);
+  const focusSubjects = [...document.querySelectorAll('#focusGrid .selected-focus')].map(b => {
+    const input = document.querySelector('#count-' + b.dataset.subj + ' input');
+    return { subj: b.dataset.subj, count: input ? input.value : '' };
+  });
+
+  const btn = document.getElementById('btnSubmit');
+  btn.disabled = true;
+  btn.textContent = '送信中…';
+
+  const payload = {
+    name,
+    school: document.getElementById('school').value.trim(),
+    weakSubjects,
+    focusSubjects,
+    memo: document.getElementById('memo').value.trim(),
+    schedule: state
+  };
+
+  try {
+    await fetch(GAS_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload)
+    });
+    showToast('✅ 送信完了しました！');
+    btn.textContent = '✅ 送信済み';
+  } catch (err) {
+    showToast('❌ 送信に失敗しました。もう一度お試しください', true);
+    btn.disabled = false;
+    btn.textContent = '📨 この内容で送信する';
+  }
+}
+
+buildSubjects();
+buildSchedule();
+updateCounters();
+</script>
+</body>
+</html>
